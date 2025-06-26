@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đơn Ứng Tuyển Của Tôi</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/navbar.css">
+    <link rel="stylesheet" href="/static/css/applicationList.css">
+    <style>
+
+    </style>
+</head>
+<body>
+<!-- Navigation Fragment -->
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<!-- Flash Messages -->
+<div class="container mt-3">
+    <div th:if="${successMessage}" class="alert alert-success alert-modern alert-dismissible fade show">
+        <i class="fas fa-check-circle me-2"></i>
+        <span th:text="${successMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng"></button>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-danger alert-modern alert-dismissible fade show">
+        <i class="fas fa-exclamation-circle me-2"></i>
+        <span th:text="${errorMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng"></button>
+    </div>
+</div>
+
+<div class="container">
+    <div class="applications-container">
+        <div class="page-header">
+            <h1 class="page-title">
+                <i class="fas fa-briefcase"></i>
+                Đơn Ứng Tuyển Của Tôi
+            </h1>
+        </div>
+
+        <div th:if="${applications.content.empty}">
+            <div class="empty-state">
+                <i class="fas fa-inbox"></i>
+                <h3>Chưa có đơn ứng tuyển nào</h3>
+                <p>Bạn chưa ứng tuyển vào vị trí công việc nào. Hãy khám phá các cơ hội nghề nghiệp hấp dẫn và bắt đầu hành trình của mình!</p>
+                <a href="/jobs" class="btn btn-modern mt-3">
+                    <i class="fas fa-search me-2"></i>
+                    Tìm kiếm việc làm
+                </a>
+            </div>
+        </div>
+
+        <div th:unless="${applications.content.empty}">
+            <!-- Card View for Mobile/Tablet -->
+            <div class="d-lg-none">
+                <div th:each="app : ${applications.content}" class="application-card">
+                    <div class="card-header">
+                        <div class="position-info">
+                            <h3 class="position-title" th:text="${app.positionName}">Tên vị trí</h3>
+                            <div class="position-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span th:text="${app.createAt}">Ngày ứng tuyển</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span th:switch="${app.progress.name()}" class="status-badge">
+                            <span th:case="pending" class="status-pending">Chờ xử lý</span>
+                            <span th:case="handling" class="status-handling">Đang xử lý</span>
+                            <span th:case="interviewing" class="status-interviewing">Phỏng vấn</span>
+                            <span th:case="done" class="status-done">Hoàn thành</span>
+                        </span>
+                    </div>
+                    <div class="card-actions">
+                        <a th:href="@{/candidate/applications/{id}(id=${app.id})}" class="btn btn-modern">
+                            <i class="fas fa-eye"></i>
+                            Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table View for Desktop -->
+            <div class="d-none d-lg-block">
+                <div class="modern-table">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                        <tr>
+                            <th><i class="fas fa-briefcase me-2"></i>Vị trí công việc</th>
+                            <th><i class="fas fa-chart-line me-2"></i>Trạng thái</th>
+                            <th><i class="fas fa-calendar me-2"></i>Ngày ứng tuyển</th>
+                            <th><i class="fas fa-cogs me-2"></i>Hành động</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="app : ${applications.content}">
+                            <td>
+                                <div class="fw-semibold" th:text="${app.positionName}">Tên vị trí</div>
+                            </td>
+                            <td>
+                                <span th:switch="${app.progress.name()}" class="status-badge">
+                                    <span th:case="pending" class="status-pending">Chờ xử lý</span>
+                                    <span th:case="handling" class="status-handling">Đang xử lý</span>
+                                    <span th:case="interviewing" class="status-interviewing">Phỏng vấn</span>
+                                    <span th:case="done" class="status-done">Hoàn thành</span>
+                                </span>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-clock me-2 text-muted"></i>
+                                    <span th:text="${app.createAt}">Ngày</span>
+                                </div>
+                            </td>
+                            <td>
+                                <a th:href="@{/candidate/applications/{id}(id=${app.id})}" class="btn btn-modern">
+                                    <i class="fas fa-eye"></i>
+                                    Xem chi tiết
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination-container">
+                <nav aria-label="Điều hướng trang">
+                    <ul class="pagination">
+                        <li class="page-item" th:classappend="${applications.currentPage == 1} ? 'disabled'">
+                            <a class="page-link" th:href="@{/candidate/applications(page=1)}" title="Trang đầu">
+                                <i class="fas fa-angle-double-left"></i>
+                            </a>
+                        </li>
+                        <li class="page-item" th:classappend="${applications.currentPage == 1} ? 'disabled'">
+                            <a class="page-link" th:href="@{/candidate/applications(page=${applications.currentPage - 1})}" title="Trang trước">
+                                <i class="fas fa-angle-left"></i>
+                            </a>
+                        </li>
+
+                        <li th:each="i : ${#numbers.sequence(1, applications.totalPages)}"
+                            class="page-item" th:classappend="${i == applications.currentPage} ? 'active'">
+                            <a class="page-link" th:href="@{/candidate/applications(page=${i})}" th:text="${i}">1</a>
+                        </li>
+
+                        <li class="page-item" th:classappend="${applications.currentPage == applications.totalPages} ? 'disabled'">
+                            <a class="page-link" th:href="@{/candidate/applications(page=${applications.currentPage + 1})}" title="Trang sau">
+                                <i class="fas fa-angle-right"></i>
+                            </a>
+                        </li>
+                        <li class="page-item" th:classappend="${applications.currentPage == applications.totalPages} ? 'disabled'">
+                            <a class="page-link" th:href="@{/candidate/applications(page=${applications.totalPages})}" title="Trang cuối">
+                                <i class="fas fa-angle-double-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Auto-hide alerts after 5 seconds
+        setTimeout(function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                const bsAlert = new bootstrap.Alert(alert);
+                if (bsAlert) {
+                    bsAlert.close();
+                }
+            });
+        }, 5000);
+
+        // Add smooth scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all application cards
+        document.querySelectorAll('.application-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Add ripple effect to buttons
+        document.querySelectorAll('.btn-modern').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = button.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.classList.add('ripple');
+
+                button.appendChild(ripple);
+
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Enhanced table row hover effects
+        document.querySelectorAll('.modern-table tbody tr').forEach(row => {
+            row.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.02)';
+                this.style.transition = 'transform 0.2s ease';
+            });
+
+            row.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+    });
+
+    // Add CSS for ripple effect
+    const style = document.createElement('style');
+    style.textContent = `
+        .btn-modern {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+</body>
+</html>

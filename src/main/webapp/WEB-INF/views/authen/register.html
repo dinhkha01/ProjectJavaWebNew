@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký tài khoản</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .register-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .register-header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .register-header h2 {
+            margin: 0;
+            font-weight: 300;
+            font-size: 2rem;
+        }
+
+        .register-body {
+            padding: 2rem;
+        }
+
+        .form-floating {
+            margin-bottom: 1rem;
+        }
+
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+
+        .btn-register {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 15px;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #6c757d;
+        }
+
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            border-radius: 15px;
+            border: none;
+            margin-bottom: 1rem;
+        }
+
+        .invalid-feedback {
+            display: block;
+            font-size: 0.875rem;
+            color: #dc3545;
+            margin-top: 0.25rem;
+        }
+
+        .form-control.is-invalid {
+            border-color: #dc3545;
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon i {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            color: #6c757d;
+            z-index: 10;
+        }
+
+        .input-icon .form-control {
+            padding-left: 45px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="register-container">
+                <div class="register-header">
+                    <i class="fas fa-user-plus fa-3x mb-3"></i>
+                    <h2>Đăng ký tài khoản</h2>
+                    <p class="mb-0">Tạo tài khoản mới để bắt đầu</p>
+                </div>
+
+                <div class="register-body">
+                    <!-- Hiển thị thông báo thành công -->
+                    <div th:if="${success}" class="alert alert-success" role="alert">
+                        <i class="fas fa-check-circle me-2"></i>
+                        <span th:text="${success}"></span>
+                    </div>
+
+                    <!-- Hiển thị thông báo lỗi -->
+                    <div th:if="${error}" class="alert alert-danger" role="alert">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <span th:text="${error}"></span>
+                    </div>
+
+                    <form th:action="@{/register}" th:object="${candidateDto}" method="post">
+                        <div class="form-floating input-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text"
+                                   th:field="*{name}"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
+                                   id="name"
+                                   placeholder="Họ và tên">
+                            <label for="name">Họ và tên</label>
+                            <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+                                <span th:errors="*{name}"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-floating input-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="text"
+                                   th:field="*{email}"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
+                                   id="email"
+                                   placeholder="Email">
+                            <label for="email">Email</label>
+                            <div th:if="${#fields.hasErrors('email')}" class="invalid-feedback">
+                                <span th:errors="*{email}"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-floating input-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password"
+                                   th:field="*{password}"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''"
+                                   id="password"
+                                   placeholder="Mật khẩu">
+                            <label for="password">Mật khẩu</label>
+                            <div th:if="${#fields.hasErrors('password')}" class="invalid-feedback">
+                                <span th:errors="*{password}"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-floating input-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password"
+                                   th:field="*{confirmPassword}"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid' : ''"
+                                   id="confirmPassword"
+                                   placeholder="Xác nhận mật khẩu">
+                            <label for="confirmPassword">Xác nhận mật khẩu</label>
+                            <div th:if="${#fields.hasErrors('confirmPassword')}" class="invalid-feedback">
+                                <span th:errors="*{confirmPassword}"></span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-register">
+                            <i class="fas fa-user-plus me-2"></i>
+                            Đăng ký
+                        </button>
+                    </form>
+
+                    <div class="login-link">
+                        <p>Đã có tài khoản? <a th:href="@{/login}">Đăng nhập ngay</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

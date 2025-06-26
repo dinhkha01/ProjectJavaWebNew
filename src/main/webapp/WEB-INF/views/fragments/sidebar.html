@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>sidebar</title>
+    <link rel="stylesheet" href="/static/css/sidebar.css">
+</head>
+<body>
+<div th:fragment="sidebar" class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="admin-avatar">
+            <i class="fas fa-user-shield"></i>
+        </div>
+        <h5 class="mb-1">Admin</h5>
+    </div>
+
+    <div class="sidebar-menu">
+        <a th:href="@{/admin/dashboard}"
+           th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/dashboard') ? 'active' : ''}">
+            <i class="fas fa-tachometer-alt me-3"></i>Dashboard
+        </a>
+        <a th:href="@{/admin/candidates}"
+           th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/candidates') ? 'active' : ''}">
+            <i class="fas fa-users me-3"></i>Quản Lý Ứng Viên
+        </a>
+        <!-- Thêm mục menu mới -->
+        <a th:href="@{/admin/positions}"
+           th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/positions') ? 'active' : ''}">
+            <i class="fas fa-briefcase me-3"></i>Vị Trí Tuyển Dụng
+        </a>
+        <a th:href="@{/admin/applications}"
+           th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/applications') ? 'active' : ''}">
+            <i class="fas fa-file-alt me-3"></i>Đơn Ứng Tuyển
+        </a>
+        <a th:href="@{/admin/technologies}"
+           th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/technologies') ? 'active' : ''}">
+            <i class="fas fa-code me-3"></i>Công Nghệ
+        </a>
+        <a th:href="@{/logout}" class="text-danger">
+            <i class="fas fa-sign-out-alt me-3"></i>Đăng Xuất
+        </a>
+    </div>
+</div>
+
+<!-- Mobile Menu Button Fragment -->
+<button th:fragment="mobile-menu-btn" class="mobile-menu-btn" onclick="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+</button>
+
+</body>
+</html>

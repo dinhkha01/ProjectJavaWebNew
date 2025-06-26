@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Chi tiết vị trí</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/navbar.css">
+  <link rel="stylesheet" href="/static/css/candidatePositionDetail.css">
+
+</head>
+<body>
+<!-- Navigation Fragment -->
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container">
+  <div class="position-detail-card">
+    <div class="position-header">
+      <h1 class="position-title" th:text="${position.name}">Senior Full Stack Developer</h1>
+      <div class="position-meta">
+        <div class="position-meta-item">
+          <i class="fas fa-money-bill-wave"></i>
+          <span th:text="${position.minSalary} + ' - ' + ${position.maxSalary}">25.000.000 - 35.000.000 VNĐ</span>
+        </div>
+        <div class="position-meta-item">
+          <i class="fas fa-briefcase"></i>
+          <span th:text="${position.minExperience} + ' năm kinh nghiệm'">3+ năm kinh nghiệm</span>
+        </div>
+        <div class="position-meta-item">
+          <i class="fas fa-calendar-times"></i>
+          <span th:text="'Hết hạn: ' + ${position.expiredDate}">Hết hạn: 30/12/2024</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="position-section">
+      <h3 class="section-title">Mô tả công việc</h3>
+      <p th:text="${position.description}">
+        Chúng tôi đang tìm kiếm một Senior Full Stack Developer có kinh nghiệm để tham gia vào đội ngũ phát triển của chúng tôi.
+        Bạn sẽ chịu trách nhiệm phát triển và duy trì các ứng dụng web full-stack, từ giao diện người dùng đến backend services.
+        Cần có khả năng làm việc với các công nghệ hiện đại và khả năng học hỏi nhanh chóng.
+      </p>
+    </div>
+
+    <div class="position-section">
+      <h3 class="section-title">Công nghệ yêu cầu</h3>
+      <div class="tech-tags-container">
+        <span class="tech-tag"  th:each="tech : ${position.technologies}" th:text="${tech.name}" th:style="'--delay: ' ">React</span>
+
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <a th:href="@{/candidate/positions}" class="btn-modern btn-back">
+        <i class="fas fa-arrow-left"></i>
+        Quay lại
+      </a>
+      <a th:href="@{/candidate/positions/apply/{id}(id=${position.id})}"
+         class="btn-modern btn-apply"
+         th:if="${!applied}">
+        <i class="fas fa-paper-plane"></i>
+        Ứng tuyển ngay
+      </a>
+      <button class="btn-modern btn-disabled" th:if="${applied}">
+        <i class="fas fa-check"></i>
+        Đã ứng tuyển
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Add stagger animation to tech tags
+  document.addEventListener('DOMContentLoaded', function() {
+    const techTags = document.querySelectorAll('.tech-tag');
+    techTags.forEach((tag, index) => {
+      tag.style.setProperty('--delay', index);
+    });
+
+    // Add smooth scroll behavior
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Add intersection observer for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    document.querySelectorAll('.position-section').forEach(section => {
+      observer.observe(section);
+    });
+  });
+</script>
+</body>
+</html>

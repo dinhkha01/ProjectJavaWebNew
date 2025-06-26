@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ Sơ Ứng Viên</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/navbar.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-top: 70px;
+            padding-bottom: 3rem;
+        }
+
+        .profile-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin: 2rem auto;
+            max-width: 1000px;
+            overflow: hidden;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><polygon points="0,0 1000,0 1000,80 0,100"/></svg>');
+            background-size: cover;
+        }
+
+
+
+        /* Rest of your styles remain unchanged */
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-avatar i {
+            font-size: 3rem;
+            color: white;
+        }
+
+        .profile-name {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-email {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .info-card h5 {
+            color: #4facfe;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 40%;
+        }
+
+        .info-value {
+            color: #333;
+            font-weight: 500;
+            width: 60%;
+            text-align: right;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .technology-container {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+
+        .btn-custom {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+            color: white;
+        }
+
+        .btn-danger-custom {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .info-value {
+            text-align: right;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #666;
+        }
+
+        .btn-danger-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            color: white;
+        }
+
+        .technology-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.875rem;
+            margin: 0.25rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #4facfe;
+            box-shadow: 0 0 0 0.2rem rgba(79, 172, 254, 0.25);
+        }
+
+        .modal-content {
+            border-radius: 20px;
+            border: none;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border-radius: 20px 20px 0 0;
+            border-bottom: none;
+        }
+
+        .modal-title {
+            font-weight: 600;
+        }
+
+        .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
+        .alert {
+            border-radius: 15px;
+            border: none;
+            font-weight: 500;
+        }
+
+        .is-invalid {
+            border-color: #dc3545;
+        }
+
+        .invalid-feedback {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .tech-select-container {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+        }
+
+        .form-check {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .form-check:last-child {
+            border-bottom: none;
+        }
+
+        .form-check-input {
+            width: 1.2em;
+            height: 1.2em;
+            margin-top: 0.15em;
+        }
+
+
+        .form-check-label {
+            margin-left: 0.5em;
+            font-size: 1.05em;
+        }
+
+
+        .form-check {
+            padding: 0.5rem 0;
+        }
+
+
+        .form-check:hover {
+            background-color: rgba(79, 172, 254, 0.1);
+            border-radius: 5px;
+        }
+
+
+        .form-check-input {
+            transition: all 0.2s ease;
+        }
+
+
+        .form-check-input:checked {
+            background-color: #4facfe;
+            border-color: #4facfe;
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation Fragment -->
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<!-- Flash Messages -->
+<div class="container mt-3">
+    <div th:if="${updateSuccess}" class="alert alert-success alert-dismissible fade show">
+        <i class="fas fa-check-circle me-2"></i>
+        <span th:text="${updateSuccess}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div th:if="${updateError}" class="alert alert-danger alert-dismissible fade show">
+        <i class="fas fa-exclamation-circle me-2"></i>
+        <span th:text="${updateError}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div th:if="${passwordSuccess}" class="alert alert-success alert-dismissible fade show">
+        <i class="fas fa-check-circle me-2"></i>
+        <span th:text="${passwordSuccess}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div th:if="${passwordError}" class="alert alert-danger alert-dismissible fade show">
+        <i class="fas fa-exclamation-circle me-2"></i>
+        <span th:text="${passwordError}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
+
+<div class="container">
+    <div class="profile-container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <h1 class="profile-name" th:text="${candidateName}">Nguyễn Văn A</h1>
+            <p class="profile-email" th:text="${candidateEmail}">nguyenvana@email.com</p>
+        </div>
+
+        <!-- Profile Content -->
+        <div class="p-4">
+            <div class="row">
+                <!-- Thông tin cơ bản -->
+                <div class="col-md-6">
+                    <div class="info-card">
+                        <h5><i class="fas fa-info-circle"></i>Thông Tin Cơ Bản</h5>
+                        <div class="info-row">
+                            <span class="info-label">
+                                <i class="fas fa-user text-primary"></i>Họ Tên
+                            </span>
+                            <span class="info-value" th:text="${candidate.name}">Nguyễn Văn A</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">
+                                <i class="fas fa-envelope text-primary"></i>Email
+                            </span>
+                            <span class="info-value" th:text="${candidate.email}">nguyenvana@email.com</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">
+                                <i class="fas fa-phone text-primary"></i>Số Điện Thoại
+                            </span>
+                            <span class="info-value" th:text="${candidate.phone ?: 'Chưa cập nhật'}">Chưa cập nhật</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">
+                                <i class="fas fa-calendar text-primary"></i>Ngày Sinh
+                            </span>
+                            <span class="info-value" th:text="${candidate.dob ?: 'Chưa cập nhật'}">Chưa cập nhật</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">
+                                <i class="fas fa-venus-mars text-primary"></i>Giới Tính
+                            </span>
+                            <span class="info-value" th:text="${candidate.gender ?: 'Chưa cập nhật'}">Chưa cập nhật</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thông tin nghề nghiệp -->
+                <div class="col-md-6">
+                    <div class="info-card">
+                        <h5><i class="fas fa-briefcase"></i>Thông Tin Nghề Nghiệp</h5>
+                        <div class="info-row">
+                            <span class="info-label">
+                                <i class="fas fa-chart-line text-success"></i>Kinh Nghiệm
+                            </span>
+                            <span class="info-value">
+                                <span th:text="${candidate.experience ?: 0}">0</span> năm
+                            </span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">
+                                <i class="fas fa-toggle-on text-success"></i>Trạng Thái
+                            </span>
+                            <span class="status-badge status-active" th:text="${candidate.status ?: 'Active'}">Active</span>
+                        </div>
+                    </div>
+
+                    <!-- Công nghệ -->
+                    <div class="info-card">
+                        <h5><i class="fas fa-code"></i>Công Nghệ</h5>
+                        <div class="technology-container">
+                            <div th:if="${candidate.technologyNames != null and !candidate.technologyNames.isEmpty()}">
+            <span th:each="tech : ${candidate.technologyNames}"
+                  th:text="${tech}"
+                  class="technology-tag">Java</span>
+                            </div>
+                            <div th:if="${candidate.technologyNames == null or candidate.technologyNames.isEmpty()}">
+                                <p class="text-muted mb-0">Chưa có công nghệ nào được thêm</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mô tả -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="info-card">
+                        <h5><i class="fas fa-file-alt"></i>Mô Tả Bản Thân</h5>
+                        <div class="p-3 bg-light rounded">
+                            <p class="mb-0" th:text="${candidate.description ?: 'Chưa có mô tả'}">
+                                Chưa có mô tả
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                    <i class="fas fa-edit me-2"></i>Chỉnh Sửa Hồ Sơ
+                </button>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#technologyModal" >
+                    <i class="fas fa-code me-2"></i>Quản Lý Công Nghệ
+                </button>
+                <button class="btn btn-danger-custom" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                    <i class="fas fa-key me-2"></i>Đổi Mật Khẩu
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Profile Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfileModalLabel"><i class="fas fa-user-edit me-2"></i>Chỉnh Sửa Hồ Sơ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form th:action="@{/candidate/profile/update}" th:object="${profileDto}" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Họ tên</label>
+                                <input type="text" class="form-control" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'"
+                                       id="name" th:field="*{name}" required>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}"
+                                     th:errors="*{name}">Lỗi họ tên</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"
+                                       id="email" th:field="*{email}" required>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}"
+                                     th:errors="*{email}">Lỗi email</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Số điện thoại</label>
+                                <input type="tel" class="form-control" th:classappend="${#fields.hasErrors('phone')} ? 'is-invalid'"
+                                       id="phone" th:field="*{phone}" placeholder="10-11 chữ số">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('phone')}"
+                                     th:errors="*{phone}">Lỗi số điện thoại</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="dob" class="form-label">Ngày sinh</label>
+                                <input type="date" class="form-control" th:classappend="${#fields.hasErrors('dob')} ? 'is-invalid'"
+                                       id="dob" th:field="*{dob}">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('dob')}"
+                                     th:errors="*{dob}">Lỗi ngày sinh</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="gender" class="form-label">Giới tính</label>
+                                <select class="form-select" th:classappend="${#fields.hasErrors('gender')} ? 'is-invalid'"
+                                        id="gender" th:field="*{gender}">
+                                    <option value="">Chọn giới tính</option>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nữ">Nữ</option>
+                                </select>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('gender')}"
+                                     th:errors="*{gender}">Lỗi giới tính</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="experience" class="form-label">Kinh nghiệm (năm)</label>
+                                <input type="number" min="0" max="50" class="form-control"
+                                       th:classappend="${#fields.hasErrors('experience')} ? 'is-invalid'"
+                                       id="experience" th:field="*{experience}">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('experience')}"
+                                     th:errors="*{experience}">Lỗi kinh nghiệm</div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Mô tả bản thân</label>
+                                <textarea class="form-control" th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'"
+                                          id="description" th:field="*{description}" rows="4"
+                                          placeholder="Mô tả ngắn gọn về bản thân..."></textarea>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}"
+                                     th:errors="*{description}">Lỗi mô tả</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                    <button type="submit" class="btn btn-custom">Lưu thay đổi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Technology Modal -->
+<div class="modal fade" id="technologyModal" tabindex="-1" aria-labelledby="technologyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="technologyModalLabel"><i class="fas fa-code me-2"></i>Quản lý công nghệ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form th:action="@{/candidate/profile/update-technologies}" method="post">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Chọn công nghệ của bạn</label>
+                        <div class="tech-select-container">
+                            <div th:each="tech : ${allTechnologies}" class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                       th:id="'tech_' + ${tech.id}"
+                                       th:value="${tech.id}"
+                                       th:checked="${selectedTechIds.contains(tech.id)}"
+                                       name="technologyIds">
+                                <label class="form-check-label" th:for="'tech_' + ${tech.id}" th:text="${tech.name}"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="candidateId" th:value="${candidate.id}">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-custom">Lưu thay đổi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changePasswordModalLabel"><i class="fas fa-key me-2"></i>Đổi Mật Khẩu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form th:action="@{/candidate/profile/change-password}" th:object="${changePasswordDto}" method="post">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="currentPassword" class="form-label">Mật khẩu hiện tại</label>
+                        <input type="password" class="form-control" th:classappend="${#fields.hasErrors('currentPassword')} ? 'is-invalid'"
+                               id="currentPassword" th:field="*{currentPassword}" required>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('currentPassword')}"
+                             th:errors="*{currentPassword}">Lỗi mật khẩu hiện tại</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label">Mật khẩu mới</label>
+                        <input type="password" class="form-control" th:classappend="${#fields.hasErrors('newPassword')} ? 'is-invalid'"
+                               id="newPassword" th:field="*{newPassword}" required>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('newPassword')}"
+                             th:errors="*{newPassword}">Lỗi mật khẩu mới</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Xác nhận mật khẩu mới</label>
+                        <input type="password" class="form-control" th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'"
+                               id="confirmPassword" th:field="*{confirmPassword}" required>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('confirmPassword')}"
+                             th:errors="*{confirmPassword}">Lỗi xác nhận mật khẩu</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                    <button type="submit" class="btn btn-custom">Đổi mật khẩu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Kiểm tra xem có lỗi trong form chỉnh sửa không
+        const hasEditErrors = document.querySelectorAll('#editProfileModal .is-invalid').length > 0;
+        if (hasEditErrors) {
+            const editModal = new bootstrap.Modal(document.getElementById('editProfileModal'));
+            editModal.show();
+        }
+
+        // Kiểm tra xem có lỗi trong form đổi mật khẩu không
+        const hasPasswordErrors = document.querySelectorAll('#changePasswordModal .is-invalid').length > 0;
+        if (hasPasswordErrors) {
+            const passwordModal = new bootstrap.Modal(document.getElementById('changePasswordModal'));
+            passwordModal.show();
+        }
+
+        // Kiểm tra xem có lỗi trong form công nghệ không
+        const hasTechErrors = document.querySelectorAll('#technologyModal .is-invalid').length > 0;
+        if (hasTechErrors) {
+            const techModal = new bootstrap.Modal(document.getElementById('technologyModal'));
+            techModal.show();
+        }
+
+        // Xử lý ẩn/hiện navbar khi scroll
+        const navbar = document.querySelector('.navbar-custom');
+        let lastScrollY = window.scrollY;
+        const scrollThreshold = 100;
+        const navbarHeight = navbar.offsetHeight;
+
+        window.addEventListener('scroll', function() {
+            const currentScrollY = window.scrollY;
+
+            // Only run if scrolled more than threshold
+            if (Math.abs(currentScrollY - lastScrollY) > scrollThreshold) {
+                if (currentScrollY > lastScrollY && currentScrollY > navbarHeight) {
+                    // Scrolling down
+                    navbar.classList.add('navbar-hidden');
+                } else {
+                    // Scrolling up
+                    navbar.classList.remove('navbar-hidden');
+                }
+                lastScrollY = currentScrollY;
+            }
+        });
+    });
+</script>
+</body>
+</html>

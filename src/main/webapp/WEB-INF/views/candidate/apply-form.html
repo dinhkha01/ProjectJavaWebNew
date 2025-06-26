@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Nộp đơn ứng tuyển</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/navbar.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding-top: 70px;
+      padding-bottom: 3rem;
+    }
+
+    .apply-form-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .form-title {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+<!-- Navigation Fragment -->
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container">
+  <div class="apply-form-card">
+    <h2 class="form-title">Nộp đơn ứng tuyển</h2>
+
+    <div th:if="${errorMessage}" class="alert alert-danger">
+      <i class="fas fa-exclamation-circle me-2"></i>
+      <span th:text="${errorMessage}"></span>
+    </div>
+
+    <form th:action="@{/candidate/positions/apply}" th:object="${applicationRequest}" method="post">
+      <!-- Sửa: Thêm input hidden cho positionId -->
+      <input type="hidden" th:field="*{positionId}">
+
+      <div class="mb-3">
+        <label for="cvUrl" class="form-label">Đường dẫn CV (URL)</label>
+        <input type="url" class="form-control" th:classappend="${#fields.hasErrors('cvUrl')} ? 'is-invalid' : ''"
+               id="cvUrl" th:field="*{cvUrl}" required placeholder="https://example.com/your-cv.pdf">
+        <div class="invalid-feedback" th:if="${#fields.hasErrors('cvUrl')}" th:errors="*{cvUrl}"></div>
+      </div>
+
+      <div class="d-flex justify-content-end gap-2">
+        <a th:href="@{/candidate/positions/{id}(id=${applicationRequest.positionId})}" class="btn btn-secondary">
+          Hủy bỏ
+        </a>
+        <button type="submit" class="btn btn-primary">
+          Nộp đơn
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Danh sách vị trí tuyển dụng</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/navbar.css">
+  <link rel="stylesheet" href="/static/css/candidatePositionList.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- Navigation Fragment -->
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <h1 class="page-title">Cơ hội nghề nghiệp</h1>
+    <p class="page-subtitle">Khám phá những vị trí việc làm tuyệt vời phù hợp với bạn</p>
+
+    <div class="search-container">
+      <form th:action="@{/candidate/positions}" method="get" class="search-box">
+        <input type="text" class="search-input" name="keyword" th:value="${pageDto.keyword}"
+               placeholder="Tìm kiếm vị trí, công nghệ, công ty...">
+        <button class="search-btn" type="submit">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Job Cards Grid -->
+  <div class="row">
+    <div th:each="position : ${pageDto.content}" class="col-lg-4 col-md-6 col-sm-12">
+      <div class="position-card">
+        <div class="position-header">
+          <h5 class="position-title" th:text="${position.name}"></h5>
+          <div class="position-company">
+            <i class="fas fa-building"></i> Tech Company
+          </div>
+        </div>
+
+        <div class="position-body">
+          <div class="position-detail">
+            <i class="fas fa-dollar-sign"></i>
+            <span class="position-salary" th:text="${position.minSalary} + ' - ' + ${position.maxSalary} + ' $'"></span>
+          </div>
+
+          <div class="position-detail">
+            <i class="fas fa-briefcase"></i>
+            <span class="position-exp" th:text="${position.minExperience} + ' năm kinh nghiệm'"></span>
+          </div>
+
+          <div class="position-detail">
+            <i class="fas fa-map-marker-alt"></i>
+            <span class="position-location">Hồ Chí Minh</span>
+          </div>
+
+          <div class="tech-container">
+            <div class="tech-tags">
+              <span th:each="tech : ${position.technologyNames}" class="tech-tag" th:text="${tech}"></span>
+            </div>
+          </div>
+
+          <p class="position-description" th:text="${position.description}"></p>
+        </div>
+
+        <div class="position-footer">
+          <div class="position-expired">
+            <i class="fas fa-clock"></i>
+            <span th:text="'Hết hạn: ' + ${position.expiredDate}"></span>
+          </div>
+          <a th:href="@{/candidate/positions/{id}(id=${position.id})}"
+             class="btn btn-apply"
+             th:classappend="${position.applied} ? 'btn-disabled' : ''">
+            <i class="fas fa-paper-plane me-2"></i>
+            <span th:if="${!position.applied}">Ứng tuyển</span>
+            <span th:if="${position.applied}">Đã ứng tuyển</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div th:if="${pageDto.totalPages > 1}" class="pagination-container">
+    <nav>
+      <ul class="pagination">
+        <li class="page-item" th:classappend="${pageDto.currentPage == 0} ? 'disabled' : ''">
+          <a class="page-link" th:href="@{/candidate/positions(page=${pageDto.currentPage - 1}, size=${pageDto.size}, keyword=${pageDto.keyword})}">
+            <i class="fas fa-chevron-left"></i>
+          </a>
+        </li>
+
+        <li th:each="i : ${#numbers.sequence(1, pageDto.totalPages)}"
+            class="page-item" th:classappend="${i == pageDto.currentPage + 1} ? 'active' : ''">
+          <a class="page-link" th:href="@{/candidate/positions(page=${i+-1}, size=${pageDto.size}, keyword=${pageDto.keyword})}"
+             th:text="${i}"></a>
+        </li>
+
+        <li class="page-item" th:classappend="${pageDto.currentPage == pageDto.totalPages - 1} ? 'disabled' : ''">
+          <a class="page-link" th:href="@{/candidate/positions(page=${pageDto.currentPage + 1}, size=${pageDto.size}, keyword=${pageDto.keyword})}">
+            <i class="fas fa-chevron-right"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Add smooth scrolling and enhanced interactions
+  document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Add loading state to apply buttons
+    document.querySelectorAll('.btn-apply:not(.btn-disabled)').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        this.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Đang xử lý...';
+        this.style.pointerEvents = 'none';
+      });
+    });
+
+    // Enhanced search functionality
+    const searchInput = document.querySelector('.search-input');
+    const searchBtn = document.querySelector('.search-btn');
+
+    searchInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        searchBtn.click();
+      }
+    });
+
+    // Add intersection observer for fade-in animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    document.querySelectorAll('.position-card').forEach(card => {
+      observer.observe(card);
+    });
+  });
+</script>
+</body>
+</html>

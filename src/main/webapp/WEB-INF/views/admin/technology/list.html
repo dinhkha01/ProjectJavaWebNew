@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Quản Lý Công Nghệ</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/sidebar.css">
+  <style>
+    .main-content {
+      padding: 1.5rem;
+      margin-left: 280px;
+      transition: margin-left 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      .main-content {
+        margin-left: 0;
+        padding: 1rem;
+      }
+    }
+
+    .dashboard-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .welcome-text {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    .card {
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border: none;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, #4f5d73 0%, #2c3e50 100%);
+      color: white;
+      border-radius: 10px 10px 0 0 !important;
+      padding: 1rem 1.5rem;
+    }
+
+    .card-header h5 {
+      font-weight: 500;
+      margin-bottom: 0;
+    }
+
+    .tech-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #e9ecef;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    .action-buttons .btn {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-box {
+      max-width: 300px;
+    }
+
+    .table-modern {
+      border-collapse: separate;
+      border-spacing: 0 0.5rem;
+    }
+
+    .table-modern thead th {
+      background-color: #f8f9fa;
+      border-top: none;
+      font-weight: 600;
+      color: #4f5d73;
+    }
+
+    .table-modern tbody tr {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .table-modern tbody tr:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .table-modern tbody td {
+      vertical-align: middle;
+      border-top: none;
+    }
+
+    .table-modern tbody tr:first-child td:first-child {
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+    }
+
+    .table-modern tbody tr:first-child td:last-child {
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+
+    .pagination .page-item .page-link {
+      border-radius: 6px;
+      margin: 0 3px;
+      border: none;
+      color: #4f5d73;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .pagination .page-item.active .page-link {
+      background: linear-gradient(135deg, #4f5d73 0%, #2c3e50 100%);
+      border-color: transparent;
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+      border: none;
+      box-shadow: 0 2px 6px rgba(40, 167, 69, 0.3);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #4f5d73 0%, #2c3e50 100%);
+      border: none;
+      box-shadow: 0 2px 6px rgba(79, 93, 115, 0.3);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #dc3545 0%, #bd2130 100%);
+      border: none;
+      box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3);
+    }
+
+    .stats-card {
+      background: white;
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s;
+    }
+
+    .stats-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .stats-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .stats-icon.users { background: linear-gradient(135deg, #4e73df 0%, #224abe 100%); color: white; }
+    .stats-icon.jobs { background: linear-gradient(135deg, #1cc88a 0%, #13855c 100%); color: white; }
+    .stats-icon.applications { background: linear-gradient(135deg, #36b9cc 0%, #258391 100%); color: white; }
+    .stats-icon.companies { background: linear-gradient(135deg, #f6c23e 0%, #dda20a 100%); color: white; }
+
+    .stats-number {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #2c3e50;
+    }
+
+    .stats-label {
+      font-size: 1rem;
+      color: #6e707e;
+    }
+
+    .content-card {
+      background: white;
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+<!-- Include Sidebar -->
+<th:block th:replace="~{fragments/sidebar :: sidebar}"></th:block>
+
+<div class="main-content">
+  <!-- Dashboard Header -->
+  <div class="dashboard-header">
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <h1 class="welcome-text mb-2">Quản Lý Công Nghệ</h1>
+        <p class="text-muted mb-0">Danh sách các công nghệ trong hệ thống</p>
+      </div>
+      <div class="col-md-4 text-end">
+        <a th:href="@{/admin/technologies/add}" class="btn btn-primary">
+          <i class="fas fa-plus me-2"></i>Thêm Công Nghệ
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Statistics Cards -->
+  <div class="row mb-4">
+    <div class="col-md-3 col-sm-6 mb-4">
+      <div class="stats-card">
+        <div class="stats-icon companies">
+          <i class="fas fa-code"></i>
+        </div>
+        <div class="stats-number" th:text="${totalTechnologies}">0</div>
+        <div class="stats-label">Tổng Công Nghệ</div>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 mb-4">
+      <div class="stats-card">
+        <div class="stats-icon jobs">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="stats-number" th:text="${activeTechnologies}">0</div>
+        <div class="stats-label">Công Nghệ Hoạt Động</div>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 mb-4">
+      <div class="stats-card">
+        <div class="stats-icon applications">
+          <i class="fas fa-ban"></i>
+        </div>
+        <div class="stats-number" th:text="${deletedTechnologies}">0</div>
+        <div class="stats-label">Công Nghệ Đã Xóa</div>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 mb-4">
+      <div class="stats-card">
+        <div class="stats-icon users">
+          <i class="fas fa-sync-alt"></i>
+        </div>
+        <div class="stats-number" th:text="${lastUpdate}">Hôm nay</div>
+        <div class="stats-label">Cập Nhật Gần Nhất</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <!-- Search and Filter -->
+    <div class="d-flex justify-content-between mb-4 flex-wrap gap-2">
+      <div class="search-box">
+        <form th:action="@{/admin/technologies}" method="get" class="d-flex">
+          <input type="text" class="form-control" name="keyword" th:value="${pageDto.keyword}"
+                 placeholder="Tìm kiếm công nghệ...">
+          <button class="btn btn-outline-secondary ms-2" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+      </div>
+
+      <div class="d-flex">
+        <select class="form-select me-2" id="sortSelect" onchange="updateSort()">
+          <option value="name:asc" th:selected="${pageDto.sortBy == 'name' and pageDto.direction == 'asc'}">Tên (A-Z)</option>
+          <option value="name:desc" th:selected="${pageDto.sortBy == 'name' and pageDto.direction == 'desc'}">Tên (Z-A)</option>
+        </select>
+
+        <select class="form-select" id="sizeSelect" onchange="updatePageSize()">
+          <option value="5" th:selected="${pageDto.size == 5}">5/trang</option>
+          <option value="10" th:selected="${pageDto.size == 10}">10/trang</option>
+          <option value="20" th:selected="${pageDto.size == 20}">20/trang</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Technology Table -->
+    <div class="table-responsive">
+      <table class="table table-modern">
+        <thead class="table-light">
+        <tr>
+          <th>STT</th>
+          <th>Tên Công Nghệ</th>
+          <th>Trạng Thái</th>
+          <th class="text-end">Thao Tác</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="tech,stat : ${pageDto.content}" th:class="${tech.isDeleted} ? 'table-danger' : '' ">
+          <td th:text="${pageDto.currentPage * pageDto.size + stat.index + 1}"></td>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="tech-logo" th:text="${tech.name.substring(0,1)}"></div>
+              <span th:text="${tech.name}"></span>
+            </div>
+          </td>
+          <td>
+            <span th:if="${tech.isDeleted}" class="badge bg-danger">Đã xóa</span>
+            <span th:unless="${tech.isDeleted}" class="badge bg-success">Hoạt động</span>
+          </td>
+          <td class="text-end action-buttons">
+            <a th:if="${!tech.isDeleted}" th:href="@{/admin/technologies/edit/{id}(id=${tech.id})}"
+               class="btn btn-sm btn-primary me-1">
+              <i class="fas fa-edit"></i>
+            </a>
+            <form th:if="${!tech.isDeleted}" th:action="@{/admin/technologies/delete/{id}(id=${tech.id})}"
+                  method="post" class="d-inline">
+              <button type="submit" class="btn btn-sm btn-danger"
+                      onclick="return confirm('Bạn có chắc chắn muốn xóa công nghệ này?')">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </form>
+            <button th:if="${tech.isDeleted}" class="btn btn-sm btn-secondary disabled">
+              <i class="fas fa-ban"></i>
+            </button>
+          </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(pageDto.content)}">
+          <td colspan="4" class="text-center text-muted py-4">
+            <i class="fas fa-info-circle fa-2x mb-3"></i>
+            <p>Không tìm thấy công nghệ nào</p>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <nav th:if="${pageDto.totalPages > 1}">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${pageDto.currentPage == 0} ? 'disabled' : ''">
+          <a class="page-link" th:href="@{${'?page=' + (pageDto.currentPage - 1) +
+                          '&size=' + pageDto.size +
+                          '&sortBy=' + pageDto.sortBy +
+                          '&direction=' + pageDto.direction +
+                          '&keyword=' + pageDto.keyword}}">
+            &laquo;
+          </a>
+        </li>
+
+        <li th:each="i : ${#numbers.sequence(1, pageDto.totalPages)}"
+            class="page-item" th:classappend="${i+-1 == pageDto.currentPage} ? 'active' : ''">
+          <a class="page-link" th:href="@{${'?page=' + (i+-1) +
+                          '&size=' + pageDto.size +
+                          '&sortBy=' + pageDto.sortBy +
+                          '&direction=' + pageDto.direction +
+                          '&keyword=' + pageDto.keyword}}"
+             th:text="${i}"></a>
+        </li>
+
+        <li class="page-item" th:classappend="${pageDto.currentPage == pageDto.totalPages - 1} ? 'disabled' : ''">
+          <a class="page-link" th:href="@{${'?page=' + (pageDto.currentPage + 1) +
+                          '&size=' + pageDto.size +
+                          '&sortBy=' + pageDto.sortBy +
+                          '&direction=' + pageDto.direction +
+                          '&keyword=' + pageDto.keyword}}">
+            &raquo;
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<!-- Flash Messages -->
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+  <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="fas fa-check-circle me-2"></i>
+    <span th:text="${successMessage}"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <i class="fas fa-exclamation-circle me-2"></i>
+    <span th:text="${errorMessage}"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Update sort parameters
+  function updateSort() {
+    const [sortBy, direction] = document.getElementById('sortSelect').value.split(':');
+    const url = new URL(window.location.href);
+    url.searchParams.set('sortBy', sortBy);
+    url.searchParams.set('direction', direction);
+    window.location.href = url.toString();
+  }
+
+  // Update page size
+  function updatePageSize() {
+    const size = document.getElementById('sizeSelect').value;
+    const url = new URL(window.location.href);
+    url.searchParams.set('size', size);
+    url.searchParams.set('page', '0');
+    window.location.href = url.toString();
+  }
+
+  // Initialize animations for stats numbers
+  document.addEventListener('DOMContentLoaded', function() {
+    const counters = document.querySelectorAll('.stats-number');
+
+    counters.forEach(counter => {
+      const target = parseInt(counter.textContent);
+      let current = 0;
+      const increment = target / 100;
+
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          counter.textContent = target.toLocaleString();
+          clearInterval(timer);
+        } else {
+          counter.textContent = Math.floor(current).toLocaleString();
+        }
+      }, 20);
+    });
+  });
+</script>
+</body>
+</html>

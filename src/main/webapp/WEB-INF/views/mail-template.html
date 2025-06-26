@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác nhận Đăng ký</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #0056b3;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 15px 0;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #777777;
+            text-align: center;
+            border-top: 1px solid #eeeeee;
+            padding-top: 15px;
+        }
+        .highlight {
+            color: #0056b3;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Xác nhận Đăng ký Tài khoản</h1>
+    <p>Kính gửi <span class="highlight" th:text="${name}">[Tên khách hàng]</span>,</p>
+    <p>Chúng tôi xin chân thành cảm ơn bạn đã đăng ký tài khoản tại dịch vụ của chúng tôi.</p>
+
+    <p>Dưới đây là thông tin chi tiết về tài khoản của bạn:</p>
+    <ul>
+        <li>Mã người dùng (User ID): <span class="highlight" th:text="${userId}">[Mã người dùng]</span></li>
+        <li>Ngày đăng ký: <span class="highlight" th:text="${registrationDate}">[Ngày đăng ký]</span></li>
+    </ul>
+
+    <p>Để hoàn tất quá trình đăng ký và kích hoạt tài khoản của bạn, vui lòng nhấp vào nút bên dưới:</p>
+    <p style="text-align: center;">
+        <a href="https://your-website.com/activate?token=YOUR_ACTIVATION_TOKEN" class="button">Kích hoạt Tài khoản</a>
+    </p>
+    <p>Nếu bạn gặp bất kỳ vấn đề nào hoặc không yêu cầu đăng ký này, vui lòng bỏ qua email này.</p>
+    <p>Trân trọng,</p>
+    <p>Đội ngũ Hỗ trợ của [Tên công ty của bạn]</p>
+
+    <div class="footer">
+        <p>&copy; <span th:text="${#dates.year(#dates.createNow())}">2025</span> [Tên công ty của bạn]. All rights reserved.</p>
+        <p>Địa chỉ: 123 Đường ABC, Quận XYZ, TP. Hồ Chí Minh</p>
+    </div>
+</div>
+</body>
+</html>
