@@ -122,7 +122,7 @@ public class ApplicationDao implements IApplicationDao {
     @Transactional
     public boolean updateToHandling(Integer id) {
         Application application = findById(id);
-        if (application != null ) {
+        if (application != null && application.getProgress() == ProgressStatus.pending) {
             application.setProgress(ProgressStatus.handling);
             entityManager.merge(application);
             return true;
