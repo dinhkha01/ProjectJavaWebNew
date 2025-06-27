@@ -4,7 +4,9 @@
     <option name="state">
       <map>
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/applycaiton/view.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/applycaiton" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/candidates/list.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/candidates" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/dashboard.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/recruitment-position/list.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/recruitment-position" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/technology/form.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/technology" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/candidate/applications/list.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/candidate/applications" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/candidate/position-list.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/candidate" />

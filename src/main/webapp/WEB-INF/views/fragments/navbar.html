@@ -3,28 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Navbar Fragment</title>
-    <style>
-
-    </style>
 </head>
 <body>
 <!-- Fragment navbar -->
 <th:block th:fragment="navbar">
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container">
-            <a class="navbar-brand fw-bold text-primary" href="/candidate/positions">
-                <i class="fas fa-briefcase me-2"></i>Job Portal
+            <a class="navbar-brand" href="/candidate/positions">
+                <i class="fas fa-briefcase"></i>
+                <span class="brand-text">Job Portal</span>
             </a>
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link text-dark fw-500 active" href="/candidate/applications">
-                    <i class="fas fa-user me-1"></i>Hồ Sơ Ứng Tuyển
-                </a>
-                <a class="nav-link text-dark fw-500 active" href="/candidate/profile">
-                    <i class="fas fa-user me-1"></i>Hồ Sơ
-                </a>
-                <a class="nav-link text-dark fw-500" href="/logout">
-                    <i class="fas fa-sign-out-alt me-1"></i>Đăng Xuất
-                </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link active" href="/candidate/applications">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Hồ Sơ Ứng Tuyển</span>
+                    </a>
+                    <a class="nav-link" href="/candidate/profile">
+                        <i class="fas fa-user"></i>
+                        <span>Hồ Sơ</span>
+                    </a>
+                    <a class="nav-link nav-link-logout" href="/logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Đăng Xuất</span>
+                    </a>
+                </div>
             </div>
         </div>
     </nav>

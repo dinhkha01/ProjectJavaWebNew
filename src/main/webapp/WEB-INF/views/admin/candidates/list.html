@@ -6,249 +6,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/sidebar.css">
-    <style>
-        .main-content {
-            padding: 1.5rem;
-            margin-left: 280px;
-            transition: margin-left 0.3s;
-        }
+    <link rel="stylesheet" href="/static/css/admin/candidateList.css">
 
-        @media (max-width: 768px) {
-            .main-content {
-                margin-left: 0;
-                padding: 1rem;
-            }
-        }
-
-        .dashboard-header {
-            margin-bottom: 1.5rem;
-        }
-
-        .welcome-text {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .card {
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            border: none;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-header {
-            background: linear-gradient(135deg, #4f5d73 0%, #2c3e50 100%);
-            color: white;
-            border-radius: 10px 10px 0 0 !important;
-            padding: 1rem 1.5rem;
-        }
-
-        .card-header h5 {
-            font-weight: 500;
-            margin-bottom: 0;
-        }
-
-        .candidate-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #4f5d73 0%, #2c3e50 100%);
-            color: white;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-
-        .action-buttons .btn {
-            padding: 0.25rem 0.5rem;
-            font-size: 0.875rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin: 0 2px;
-        }
-
-        .search-filter-section {
-            background: white;
-            border-radius: 10px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            margin-bottom: 1.5rem;
-        }
-
-        .table-modern {
-            border-collapse: separate;
-            border-spacing: 0 0.5rem;
-        }
-
-        .table-modern thead th {
-            background-color: #f8f9fa;
-            border-top: none;
-            font-weight: 600;
-            color: #4f5d73;
-        }
-
-        .table-modern tbody tr {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .table-modern tbody tr:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-        }
-
-        .table-modern tbody td {
-            vertical-align: middle;
-            border-top: none;
-        }
-
-        .table-modern tbody tr td:first-child {
-            border-top-left-radius: 8px;
-            border-bottom-left-radius: 8px;
-        }
-
-        .table-modern tbody tr td:last-child {
-            border-top-right-radius: 8px;
-            border-bottom-right-radius: 8px;
-        }
-
-        .pagination .page-item .page-link {
-            border-radius: 6px;
-            margin: 0 3px;
-            border: none;
-            color: #4f5d73;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        .pagination .page-item.active .page-link {
-            background: linear-gradient(135deg, #4f5d73 0%, #2c3e50 100%);
-            border-color: transparent;
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
-            border: none;
-            box-shadow: 0 2px 6px rgba(40, 167, 69, 0.3);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #4f5d73 0%, #2c3e50 100%);
-            border: none;
-            box-shadow: 0 2px 6px rgba(79, 93, 115, 0.3);
-        }
-
-        .btn-warning {
-            background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
-            border: none;
-            box-shadow: 0 2px 6px rgba(255, 193, 7, 0.3);
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #dc3545 0%, #bd2130 100%);
-            border: none;
-            box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3);
-        }
-
-        .stats-card {
-            background: white;
-            border-radius: 10px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
-        }
-
-        .stats-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .stats-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .stats-icon.total { background: linear-gradient(135deg, #4e73df 0%, #224abe 100%); color: white; }
-        .stats-icon.active { background: linear-gradient(135deg, #1cc88a 0%, #13855c 100%); color: white; }
-        .stats-icon.inactive { background: linear-gradient(135deg, #f6c23e 0%, #dda20a 100%); color: white; }
-        .stats-icon.deleted { background: linear-gradient(135deg, #e74a3b 0%, #c0392b 100%); color: white; }
-
-        .stats-number {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #2c3e50;
-        }
-
-        .stats-label {
-            font-size: 1rem;
-            color: #6e707e;
-        }
-
-        .content-card {
-            background: white;
-            border-radius: 10px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            margin-bottom: 1.5rem;
-        }
-
-        .tech-tags .badge {
-            margin: 2px;
-            font-size: 0.75rem;
-        }
-
-        .experience-badge {
-            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
-            color: white;
-            padding: 0.25rem 0.5rem;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-
-        .age-badge {
-            background: linear-gradient(135deg, #6f42c1 0%, #5a2d91 100%);
-            color: white;
-            padding: 0.25rem 0.5rem;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-
-        .filter-row {
-            display: flex;
-            gap: 15px;
-            align-items: end;
-            flex-wrap: wrap;
-        }
-
-        .filter-group {
-            flex: 1;
-            min-width: 120px;
-        }
-
-        .filter-group label {
-            font-weight: 500;
-            color: #495057;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
-        .btn-reset {
-            background: linear-gradient(135deg, #6c757d 0%, #545b62 100%);
-            border: none;
-            color: white;
-            box-shadow: 0 2px 6px rgba(108, 117, 125, 0.3);
-        }
-    </style>
 </head>
 <body>
 <!-- Include Sidebar -->
@@ -259,71 +18,23 @@
     <div class="dashboard-header">
         <div class="row align-items-center">
             <div class="col-md-8">
-                <h1 class="welcome-text mb-2">Quản Lý Ứng Viên</h1>
-                <p class="text-muted mb-0">Danh sách ứng viên trong hệ thống</p>
-            </div>
-            <div class="col-md-4 text-end">
-                <a href="#" class="btn btn-primary">
-                    <i class="fas fa-download me-2"></i>Xuất Excel
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Statistics Cards -->
-    <div class="row mb-4">
-        <div class="col-md-3 col-sm-6 mb-4">
-            <div class="stats-card">
-                <div class="stats-icon total">
-                    <i class="fas fa-users"></i>
-                </div>
-                <div class="stats-number" th:text="${totalCandidates}">0</div>
-                <div class="stats-label">Tổng Ứng Viên</div>
-            </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6 mb-4">
-            <div class="stats-card">
-                <div class="stats-icon active">
-                    <i class="fas fa-user-check"></i>
-                </div>
-                <div class="stats-number" th:text="${activeCandidates}">0</div>
-                <div class="stats-label">Đang Hoạt Động</div>
-            </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6 mb-4">
-            <div class="stats-card">
-                <div class="stats-icon inactive">
-                    <i class="fas fa-user-lock"></i>
-                </div>
-                <div class="stats-number" th:text="${inactiveCandidates}">0</div>
-                <div class="stats-label">Đã Khóa</div>
-            </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6 mb-4">
-            <div class="stats-card">
-                <div class="stats-icon deleted">
-                    <i class="fas fa-user-times"></i>
-                </div>
-                <div class="stats-number" th:text="${deletedCandidates}">0</div>
-                <div class="stats-label">Đã Xóa</div>
+                <h1 class="welcome-text mb-2">🚀 Quản Lý Ứng Viên</h1>
+                <p class="subtitle mb-0">Khám phá và quản lý tài năng công nghệ tương lai</p>
             </div>
         </div>
     </div>
 
     <!-- Search and Filter Section -->
-    <div class="search-filter-section">
+    <div class="search-filter-section glass-card">
         <form th:action="@{/admin/candidates}" method="get">
             <!-- Search Box -->
-            <div class="row mb-3">
+            <div class="row mb-4">
                 <div class="col-md-6">
-                    <label for="keyword" class="form-label">Tìm kiếm theo tên:</label>
+                    <label for="keyword" class="form-label">🔍 Tìm kiếm theo tên:</label>
                     <div class="input-group">
                         <input type="text" class="form-control" id="keyword" name="keyword"
                                th:value="${pageDto.keyword}" placeholder="Nhập tên ứng viên...">
-                        <button class="btn btn-outline-secondary" type="submit">
+                        <button class="btn btn-primary" type="submit">
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
@@ -331,19 +42,12 @@
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-6">
-                            <label class="form-label">Sắp xếp:</label>
+                            <label class="form-label">📊 Sắp xếp:</label>
                             <select class="form-select" name="sortBy" th:value="${pageDto.sortBy}">
-                                <option value="id" th:selected="${pageDto.sortBy == 'id'}">Mới nhất</option>
-                                <option value="name" th:selected="${pageDto.sortBy == 'name'}">Tên A-Z</option>
-                                <option value="experience" th:selected="${pageDto.sortBy == 'experience'}">Kinh nghiệm</option>
-                                <option value="dob" th:selected="${pageDto.sortBy == 'dob'}">Tuổi</option>
-                            </select>
-                        </div>
-                        <div class="col-6">
-                            <label class="form-label">Thứ tự:</label>
-                            <select class="form-select" name="direction" th:value="${pageDto.direction}">
-                                <option value="asc" th:selected="${pageDto.direction == 'asc'}">Tăng dần</option>
-                                <option value="desc" th:selected="${pageDto.direction == 'desc'}">Giảm dần</option>
+                                <option value="id" th:selected="${pageDto.sortBy == 'id'}">🆕 Mới nhất</option>
+                                <option value="name" th:selected="${pageDto.sortBy == 'name'}">🔤 Tên A-Z</option>
+                                <option value="experience" th:selected="${pageDto.sortBy == 'experience'}">💼 Kinh nghiệm</option>
+                                <option value="dob" th:selected="${pageDto.sortBy == 'dob'}">🎂 Tuổi</option>
                             </select>
                         </div>
                     </div>
@@ -354,14 +58,14 @@
             <div class="filter-row">
                 <!-- Experience Filter -->
                 <div class="filter-group">
-                    <label>Kinh nghiệm (năm):</label>
-                    <div class="row g-1">
+                    <label>💼 Kinh nghiệm (năm):</label>
+                    <div class="row g-2">
                         <div class="col-6">
-                            <input type="number" class="form-control form-control-sm" name="minExperience"
+                            <input type="number" class="form-control" name="minExperience"
                                    th:value="${minExperience}" placeholder="Từ" min="0">
                         </div>
                         <div class="col-6">
-                            <input type="number" class="form-control form-control-sm" name="maxExperience"
+                            <input type="number" class="form-control" name="maxExperience"
                                    th:value="${maxExperience}" placeholder="Đến" min="0">
                         </div>
                     </div>
@@ -369,14 +73,14 @@
 
                 <!-- Age Filter -->
                 <div class="filter-group">
-                    <label>Tuổi:</label>
-                    <div class="row g-1">
+                    <label>🎂 Tuổi:</label>
+                    <div class="row g-2">
                         <div class="col-6">
-                            <input type="number" class="form-control form-control-sm" name="minAge"
+                            <input type="number" class="form-control" name="minAge"
                                    th:value="${minAge}" placeholder="Từ" min="18" max="65">
                         </div>
                         <div class="col-6">
-                            <input type="number" class="form-control form-control-sm" name="maxAge"
+                            <input type="number" class="form-control" name="maxAge"
                                    th:value="${maxAge}" placeholder="Đến" min="18" max="65">
                         </div>
                     </div>
@@ -384,45 +88,34 @@
 
                 <!-- Gender Filter -->
                 <div class="filter-group">
-                    <label>Giới tính:</label>
-                    <select class="form-select form-select-sm" name="gender">
+                    <label>👥 Giới tính:</label>
+                    <select class="form-select" name="gender">
                         <option value="all" th:selected="${selectedGender == 'all'}">Tất cả</option>
-                        <option value="Nam" th:selected="${selectedGender == 'Nam'}">Nam</option>
-                        <option value="Nữ" th:selected="${selectedGender == 'Nữ'}">Nữ</option>
+                        <option value="Nam" th:selected="${selectedGender == 'Nam'}">👨 Nam</option>
+                        <option value="Nữ" th:selected="${selectedGender == 'Nữ'}">👩 Nữ</option>
                     </select>
                 </div>
 
                 <!-- Technology Filter -->
                 <div class="filter-group">
-                    <label>Công nghệ:</label>
-                    <select class="form-select form-select-sm" name="technology">
+                    <label>💻 Công nghệ:</label>
+                    <select class="form-select" name="technology">
                         <option value="all" th:selected="${selectedTechnology == 'all'}">Tất cả</option>
-                        <option value="Java" th:selected="${selectedTechnology == 'Java'}">Java</option>
-                        <option value="Python" th:selected="${selectedTechnology == 'Python'}">Python</option>
-                        <option value="JavaScript" th:selected="${selectedTechnology == 'JavaScript'}">JavaScript</option>
-                        <option value="React" th:selected="${selectedTechnology == 'React'}">React</option>
-                        <option value="Angular" th:selected="${selectedTechnology == 'Angular'}">Angular</option>
-                        <option value="Node.js" th:selected="${selectedTechnology == 'Node.js'}">Node.js</option>
-                    </select>
-                </div>
-
-                <!-- Page Size -->
-                <div class="filter-group">
-                    <label>Hiển thị:</label>
-                    <select class="form-select form-select-sm" name="size">
-                        <option value="5" th:selected="${pageDto.size == 5}">5/trang</option>
-                        <option value="10" th:selected="${pageDto.size == 10}">10/trang</option>
-                        <option value="20" th:selected="${pageDto.size == 20}">20/trang</option>
-                        <option value="50" th:selected="${pageDto.size == 50}">50/trang</option>
+                        <option value="Java" th:selected="${selectedTechnology == 'Java'}">☕ Java</option>
+                        <option value="Python" th:selected="${selectedTechnology == 'Python'}">🐍 Python</option>
+                        <option value="JavaScript" th:selected="${selectedTechnology == 'JavaScript'}">🟨 JavaScript</option>
+                        <option value="React" th:selected="${selectedTechnology == 'React'}">⚛️ React</option>
+                        <option value="Angular" th:selected="${selectedTechnology == 'Angular'}">🅰️ Angular</option>
+                        <option value="Node.js" th:selected="${selectedTechnology == 'Node.js'}">🟢 Node.js</option>
                     </select>
                 </div>
 
                 <!-- Action Buttons -->
                 <div class="filter-group">
-                    <button type="submit" class="btn btn-primary btn-sm">
+                    <button type="submit" class="btn btn-primary">
                         <i class="fas fa-filter me-1"></i>Lọc
                     </button>
-                    <a th:href="@{/admin/candidates}" class="btn btn-reset btn-sm ms-2">
+                    <a th:href="@{/admin/candidates}" class="btn btn-reset ms-2">
                         <i class="fas fa-undo me-1"></i>Reset
                     </a>
                 </div>
@@ -430,41 +123,41 @@
         </form>
     </div>
 
-    <div class="content-card">
+    <div class="content-card glass-card">
         <!-- Candidates Table -->
         <div class="table-responsive">
             <table class="table table-modern">
-                <thead class="table-light">
+                <thead>
                 <tr>
-                    <th>STT</th>
-                    <th>Ứng viên</th>
-                    <th>Liên hệ</th>
-                    <th>Kinh nghiệm</th>
-                    <th>Tuổi/Giới tính</th>
-                    <th>Công nghệ</th>
-                    <th>Trạng thái</th>
-                    <th class="text-end">Thao tác</th>
+                    <th>📋 STT</th>
+                    <th>👤 Ứng viên</th>
+                    <th>📞 Liên hệ</th>
+                    <th>💼 Kinh nghiệm</th>
+                    <th>🎂 Tuổi/Giới tính</th>
+                    <th>💻 Công nghệ</th>
+                    <th>📊 Trạng thái</th>
+                    <th class="text-end">⚙️ Thao tác</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="candidate,stat : ${pageDto.content}">
-                    <td th:text="${pageDto.currentPage * pageDto.size + stat.index + 1}"></td>
+                    <td th:text="${pageDto.currentPage * pageDto.size + stat.index + 1}" class="fw-bold text-primary"></td>
                     <td>
                         <div class="d-flex align-items-center">
                             <div class="candidate-avatar" th:text="${candidate.name.substring(0,1)}"></div>
                             <div>
-                                <div class="fw-bold" th:text="${candidate.name}"></div>
+                                <div class="fw-bold fs-6" th:text="${candidate.name}"></div>
                                 <small class="text-muted" th:text="${candidate.email}"></small>
                             </div>
                         </div>
                     </td>
                     <td>
-                        <div>
-                            <i class="fas fa-envelope me-1 text-muted"></i>
+                        <div class="mb-1">
+                            <i class="fas fa-envelope me-2 text-primary"></i>
                             <span th:text="${candidate.email}"></span>
                         </div>
                         <div th:if="${candidate.phone}">
-                            <i class="fas fa-phone me-1 text-muted"></i>
+                            <i class="fas fa-phone me-2 text-success"></i>
                             <span th:text="${candidate.phone}"></span>
                         </div>
                     </td>
@@ -472,27 +165,35 @@
                         <span class="experience-badge" th:text="${candidate.experience} + ' năm'"></span>
                     </td>
                     <td>
-                        <div>
+                        <div class="mb-1">
                             <span class="age-badge" th:text="${candidate.age} + ' tuổi'"></span>
                         </div>
-                        <small class="text-muted" th:text="${candidate.gender}"></small>
+                        <small class="text-muted fw-semibold" th:text="${candidate.gender}"></small>
                     </td>
                     <td>
                         <div class="tech-tags">
-              <span th:each="tech : ${candidate.technologyNames}"
-                    class="badge bg-info me-1" th:text="${tech}"></span>
+                            <span th:each="tech : ${candidate.technologyNames}"
+                                  class="badge bg-info me-1" th:text="${tech}"></span>
                             <span th:if="${#lists.isEmpty(candidate.technologyNames)}"
                                   class="text-muted small">Chưa có</span>
                         </div>
                     </td>
                     <td>
-                        <span th:if="${candidate.isDeleted}" class="badge bg-danger">Đã xóa</span>
-                        <span th:if="${!candidate.isDeleted and candidate.status == 'active'}" class="badge bg-success">Hoạt động</span>
-                        <span th:if="${!candidate.isDeleted and candidate.status == 'inactive'}" class="badge bg-warning">Đã khóa</span>
+                        <span th:if="${candidate.isDeleted}" class="badge bg-danger status-indicator">
+                            <i class="fas fa-ban me-1"></i>Đã xóa
+                        </span>
+                        <span th:if="${!candidate.isDeleted and candidate.status == 'active'}"
+                              class="badge bg-success status-indicator active">
+                            <i class="fas fa-check-circle me-1"></i>Hoạt động
+                        </span>
+                        <span th:if="${!candidate.isDeleted and candidate.status == 'inactive'}"
+                              class="badge bg-warning status-indicator inactive">
+                            <i class="fas fa-pause-circle me-1"></i>Đã khóa
+                        </span>
                     </td>
                     <td class="text-end action-buttons">
                         <a th:href="@{/admin/candidates/view/{id}(id=${candidate.id})}"
-                           class="btn btn-sm btn-info" title="Xem chi tiết">
+                           class="btn btn-info interactive" title="Xem chi tiết">
                             <i class="fas fa-eye"></i>
                         </a>
 
@@ -500,25 +201,28 @@
                               th:action="@{/admin/candidates/toggle-status/{id}(id=${candidate.id})}"
                               method="post" class="d-inline">
                             <button type="submit"
-                                    th:class="${candidate.status == 'active'} ? 'btn btn-sm btn-warning' : 'btn btn-sm btn-success'"
+                                    th:class="${candidate.status == 'active'} ? 'btn btn-warning interactive' : 'btn btn-success interactive'"
                                     th:title="${candidate.status == 'active'} ? 'Khóa tài khoản' : 'Mở khóa tài khoản'"
                                     th:onclick="'return confirm(\'Bạn có chắc chắn muốn ' + (${candidate.status == 'active'} ? 'khóa' : 'mở khóa') + ' tài khoản này?\')'">
                                 <i th:class="${candidate.status == 'active'} ? 'fas fa-lock' : 'fas fa-unlock'"></i>
                             </button>
                         </form>
 
-                        <button th:if="${candidate.isDeleted}" class="btn btn-sm btn-secondary disabled" title="Đã xóa">
+                        <button th:if="${candidate.isDeleted}" class="btn btn-secondary disabled" title="Đã xóa">
                             <i class="fas fa-ban"></i>
                         </button>
                     </td>
                 </tr>
                 <tr th:if="${#lists.isEmpty(pageDto.content)}">
-                    <td colspan="8" class="text-center text-muted py-4">
-                        <i class="fas fa-user-slash fa-2x mb-3"></i>
-                        <p>Không tìm thấy ứng viên nào</p>
-                        <a th:href="@{/admin/candidates}" class="btn btn-outline-primary btn-sm">
-                            <i class="fas fa-undo me-1"></i>Xem tất cả
-                        </a>
+                    <td colspan="8">
+                        <div class="empty-state">
+                            <i class="fas fa-user-slash"></i>
+                            <h4>Không tìm thấy ứng viên nào</h4>
+                            <p class="text-muted">Hãy thử điều chỉnh bộ lọc hoặc tìm kiếm với từ khóa khác</p>
+                            <a th:href="@{/admin/candidates}" class="btn btn-primary interactive">
+                                <i class="fas fa-undo me-2"></i>Xem tất cả ứng viên
+                            </a>
+                        </div>
                     </td>
                 </tr>
                 </tbody>
@@ -526,10 +230,10 @@
         </div>
 
         <!-- Pagination -->
-        <nav th:if="${pageDto.totalPages > 1}">
+        <nav th:if="${pageDto.totalPages > 1}" class="mt-4">
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:classappend="${pageDto.currentPage == 0} ? 'disabled' : ''">
-                    <a class="page-link" th:href="@{/admin/candidates(page=${pageDto.currentPage - 1},
+                    <a class="page-link interactive" th:href="@{/admin/candidates(page=${pageDto.currentPage - 1},
                           size=${pageDto.size},
                           keyword=${pageDto.keyword},
                           sortBy=${pageDto.sortBy},
@@ -540,13 +244,13 @@
                           maxAge=${maxAge},
                           gender=${selectedGender},
                           technology=${selectedTechnology})}">
-                        &laquo;
+                        <i class="fas fa-chevron-left"></i>
                     </a>
                 </li>
 
                 <li th:each="i : ${#numbers.sequence(1, pageDto.totalPages)}"
                     class="page-item" th:classappend="${i+-1 == pageDto.currentPage} ? 'active' : ''">
-                    <a class="page-link" th:href="@{/admin/candidates(page=${i+ -1},
+                    <a class="page-link interactive" th:href="@{/admin/candidates(page=${i+ -1},
                           size=${pageDto.size},
                           keyword=${pageDto.keyword},
                           sortBy=${pageDto.sortBy},
@@ -561,7 +265,7 @@
                 </li>
 
                 <li class="page-item" th:classappend="${pageDto.currentPage == pageDto.totalPages - 1} ? 'disabled' : ''">
-                    <a class="page-link" th:href="@{/admin/candidates(page=${pageDto.currentPage + 1},
+                    <a class="page-link interactive" th:href="@{/admin/candidates(page=${pageDto.currentPage + 1},
                           size=${pageDto.size},
                           keyword=${pageDto.keyword},
                           sortBy=${pageDto.sortBy},
@@ -572,67 +276,325 @@
                           maxAge=${maxAge},
                           gender=${selectedGender},
                           technology=${selectedTechnology})}">
-                        &raquo;
+                        <i class="fas fa-chevron-right"></i>
                     </a>
                 </li>
             </ul>
         </nav>
     </div>
+
+    <!-- Stats Cards Section -->
+    <div class="row mb-4">
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="glass-card stats-card text-center">
+                <div class="stats-icon total mx-auto">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stats-number" data-count="156">0</div>
+                <div class="stats-label">Tổng ứng viên</div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="glass-card stats-card text-center">
+                <div class="stats-icon active mx-auto">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <div class="stats-number" data-count="132">0</div>
+                <div class="stats-label">Đang hoạt động</div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="glass-card stats-card text-center">
+                <div class="stats-icon inactive mx-auto">
+                    <i class="fas fa-user-clock"></i>
+                </div>
+                <div class="stats-number" data-count="18">0</div>
+                <div class="stats-label">Tạm khóa</div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="glass-card stats-card text-center">
+                <div class="stats-icon deleted mx-auto">
+                    <i class="fas fa-user-times"></i>
+                </div>
+                <div class="stats-number" data-count="6">0</div>
+                <div class="stats-label">Đã xóa</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Flash Messages -->
-<div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 1050">
     <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
         <i class="fas fa-check-circle me-2"></i>
         <span th:text="${successMessage}"></span>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
     <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
         <i class="fas fa-exclamation-circle me-2"></i>
         <span th:text="${errorMessage}"></span>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
+
+<!-- Floating Action Button -->
+<div class="position-fixed bottom-0 end-0 p-4">
+    <div class="dropdown dropup">
+        <button class="btn btn-primary rounded-circle" type="button" data-bs-toggle="dropdown"
+                style="width: 60px; height: 60px; box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);">
+            <i class="fas fa-plus fa-lg"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end glass-effect">
+            <li><a class="dropdown-item" href="#"><i class="fas fa-user-plus me-2"></i>Thêm ứng viên</a></li>
+            <li><a class="dropdown-item" href="#"><i class="fas fa-file-import me-2"></i>Import Excel</a></li>
+            <li><a class="dropdown-item" href="#"><i class="fas fa-file-export me-2"></i>Export dữ liệu</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#"><i class="fas fa-chart-bar me-2"></i>Báo cáo</a></li>
+        </ul>
+    </div>
+</div>
+
+<!-- Loading Overlay -->
+<div id="loadingOverlay" class="position-fixed top-0 start-0 w-100 h-100 d-none"
+     style="background: rgba(102, 126, 234, 0.8); backdrop-filter: blur(10px); z-index: 9999;">
+    <div class="d-flex justify-content-center align-items-center h-100">
+        <div class="text-center text-white">
+            <div class="loading-spinner mb-3"></div>
+            <h4>Đang tải dữ liệu...</h4>
+            <p>Vui lòng chờ trong giây lát</p>
+        </div>
     </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Initialize animations for stats numbers
     document.addEventListener('DOMContentLoaded', function() {
-        const counters = document.querySelectorAll('.stats-number');
+        // Animate stats numbers
+        const animateNumbers = () => {
+            const counters = document.querySelectorAll('.stats-number');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count'));
+                if (isNaN(target)) return;
 
-        counters.forEach(counter => {
-            const target = parseInt(counter.textContent);
-            if (isNaN(target)) return;
+                let current = 0;
+                const increment = target / 60;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.textContent = target.toLocaleString();
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current).toLocaleString();
+                    }
+                }, 30);
+            });
+        };
 
-            let current = 0;
-            const increment = target / 50;
-
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    counter.textContent = target.toLocaleString();
-                    clearInterval(timer);
-                } else {
-                    counter.textContent = Math.floor(current).toLocaleString();
+        // Intersection Observer for stats animation
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateNumbers();
+                    statsObserver.unobserve(entry.target);
                 }
-            }, 30);
-        });
-
-        // Auto-submit form when filter changes
-        const filterInputs = document.querySelectorAll('select[name="sortBy"], select[name="direction"], select[name="size"]');
-        filterInputs.forEach(input => {
-            input.addEventListener('change', function() {
-                this.form.submit();
             });
         });
+
+        const statsSection = document.querySelector('.row.mb-4');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+
+        // Enhanced form interactions
+        const form = document.querySelector('form');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                loadingOverlay.classList.remove('d-none');
+
+                // Hide loading after a delay (simulate processing)
+                setTimeout(() => {
+                    loadingOverlay.classList.add('d-none');
+                }, 1000);
+            });
+        }
+
+        // Auto-submit form when certain filters change
+        const autoSubmitElements = document.querySelectorAll('select[name="sortBy"], select[name="gender"], select[name="technology"]');
+        autoSubmitElements.forEach(element => {
+            element.addEventListener('change', function() {
+                loadingOverlay.classList.remove('d-none');
+                setTimeout(() => {
+                    this.form.submit();
+                }, 300);
+            });
+        });
+
+        // Enhanced table row interactions
+        const tableRows = document.querySelectorAll('.table-modern tbody tr');
+        tableRows.forEach(row => {
+            row.addEventListener('mouseenter', function() {
+                this.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(102,126,234,0.05) 100%)';
+            });
+
+            row.addEventListener('mouseleave', function() {
+                this.style.background = 'rgba(255, 255, 255, 0.95)';
+            });
+        });
+
+        // Enhanced button interactions
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Add ripple effect
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+
+                ripple.style.cssText = `
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(255,255,255,0.6);
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    pointer-events: none;
+                `;
+
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Enhanced search functionality
+        const searchInput = document.getElementById('keyword');
+        if (searchInput) {
+            let searchTimeout;
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    if (this.value.length >= 2 || this.value.length === 0) {
+                        // Add visual feedback
+                        this.style.borderColor = '#667eea';
+                        this.style.boxShadow = '0 0 0 3px rgba(102, 126, 234, 0.1)';
+
+                        setTimeout(() => {
+                            this.style.borderColor = '';
+                            this.style.boxShadow = '';
+                        }, 1000);
+                    }
+                }, 500);
+            });
+        }
+
+        // Enhanced status toggle confirmation
+        window.confirmToggleStatus = function(candidateName, currentStatus) {
+            const action = currentStatus === 'active' ? 'khóa' : 'mở khóa';
+            const icon = currentStatus === 'active' ? '🔒' : '🔓';
+
+            return new Promise((resolve) => {
+                const modal = document.createElement('div');
+                modal.className = 'modal fade';
+                modal.innerHTML = `
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content glass-effect">
+                            <div class="modal-header border-0">
+                                <h5 class="modal-title">${icon} Xác nhận thao tác</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <div class="mb-3">
+                                    <i class="fas fa-question-circle fa-3x text-warning"></i>
+                                </div>
+                                <p class="lead">Bạn có chắc chắn muốn <strong>${action}</strong> tài khoản của:</p>
+                                <p class="h5 text-primary">${candidateName}</p>
+                            </div>
+                            <div class="modal-footer border-0 justify-content-center">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    <i class="fas fa-times me-1"></i>Hủy
+                                </button>
+                                <button type="button" class="btn btn-primary" id="confirmBtn">
+                                    <i class="fas fa-check me-1"></i>Xác nhận
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                document.body.appendChild(modal);
+                const bsModal = new bootstrap.Modal(modal);
+                bsModal.show();
+
+                document.getElementById('confirmBtn').addEventListener('click', () => {
+                    resolve(true);
+                    bsModal.hide();
+                });
+
+                modal.addEventListener('hidden.bs.modal', () => {
+                    document.body.removeChild(modal);
+                });
+            });
+        };
+
+        // Smooth scrolling for pagination
+        const paginationLinks = document.querySelectorAll('.pagination .page-link');
+        paginationLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                loadingOverlay.classList.remove('d-none');
+
+                setTimeout(() => {
+                    window.location.href = this.href;
+                }, 300);
+            });
+        });
+
+        // Enhanced alert auto-dismiss
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                const bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            }, 5000);
+        });
+
+        // Floating action button animation
+        const fab = document.querySelector('.position-fixed.bottom-0 .btn');
+        if (fab) {
+            fab.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.1) rotate(90deg)';
+            });
+
+            fab.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1) rotate(0deg)';
+            });
+        }
     });
 
-    // Confirm toggle status
-    function confirmToggleStatus(candidateName, currentStatus) {
-        const action = currentStatus === 'active' ? 'khóa' : 'mở khóa';
-        return confirm(`Bạn có chắc chắn muốn ${action} tài khoản của ${candidateName}?`);
-    }
+    // Add CSS for ripple animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
 </script>
 </body>
 </html>

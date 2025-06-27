@@ -21,7 +21,7 @@ public class CandidateRecruitmentPositionController {
     @GetMapping
     public String listPositions(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "6") int size,
+            @RequestParam(defaultValue = "3") int size,
             @RequestParam(defaultValue = "") String keyword,
             Model model,
             HttpSession session) {

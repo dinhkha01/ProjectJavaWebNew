@@ -3,144 +3,15 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chi Tiết Đơn Ứng Tuyển</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/sidebar.css">
-    <style>
-        .main-content {
-            padding: 1.5rem;
-            margin-left: 280px;
-            transition: margin-left 0.3s;
-        }
+    <link rel="stylesheet" href="/static/css/admin/applicationView.css">
 
-        @media (max-width: 768px) {
-            .main-content {
-                margin-left: 0;
-                padding: 1rem;
-            }
-        }
 
-        .application-header {
-            margin-bottom: 1.5rem;
-        }
 
-        .welcome-text {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .card {
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            border: none;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-header {
-            background: linear-gradient(135deg, #4f5d73 0%, #2c3e50 100%);
-            color: white;
-            border-radius: 10px 10px 0 0 !important;
-            padding: 1rem 1.5rem;
-        }
-
-        .card-header h5 {
-            font-weight: 500;
-            margin-bottom: 0;
-        }
-
-        .info-label {
-            font-weight: 600;
-            color: #4f5d73;
-            min-width: 180px;
-        }
-
-        .status-badge {
-            padding: 0.35em 0.65em;
-            font-size: 0.75em;
-            font-weight: 600;
-            border-radius: 0.25rem;
-        }
-
-        .status-pending {
-            background-color: #fff3cd;
-            color: #856404;
-        }
-
-        .status-handling {
-            background-color: #cce5ff;
-            color: #004085;
-        }
-
-        .status-interviewing {
-            background-color: #d4edda;
-            color: #155724;
-        }
-
-        .status-done {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-
-        .action-btn {
-            min-width: 150px;
-            margin: 0.5rem;
-        }
-
-        .timeline {
-            position: relative;
-            padding-left: 1.5rem;
-            margin-left: 1rem;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background-color: #e9ecef;
-        }
-
-        .timeline-item {
-            position: relative;
-            padding-bottom: 1.5rem;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -1.7rem;
-            top: 0.25rem;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: #4f5d73;
-        }
-
-        .timeline-date {
-            font-size: 0.875rem;
-            color: #6c757d;
-        }
-
-        .timeline-content {
-            background-color: #f8f9fa;
-            border-radius: 0.5rem;
-            padding: 1rem;
-            margin-top: 0.5rem;
-        }
-
-        .error-message {
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin: 1rem 0;
-        }
-    </style>
 </head>
 <body>
 <th:block th:replace="~{fragments/sidebar :: sidebar}"></th:block>
@@ -150,12 +21,12 @@
     <div class="application-header">
         <div class="row align-items-center">
             <div class="col-md-8">
-                <h1 class="welcome-text mb-2">Chi Tiết Đơn Ứng Tuyển</h1>
-                <p class="text-muted mb-0">Thông tin chi tiết và quản lý đơn ứng tuyển</p>
+                <h1 class="welcome-text">Chi Tiết Đơn Ứng Tuyển</h1>
+                <p class="breadcrumb-text">Quản lý và theo dõi tiến trình ứng tuyển</p>
             </div>
             <div class="col-md-4 text-end">
                 <a th:href="@{/admin/applications}" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left me-2"></i>Quay lại
+                    <i class="fas fa-arrow-left me-2"></i>Quay lại danh sách
                 </a>
             </div>
         </div>
@@ -174,140 +45,194 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-
-
     <!-- Application Info -->
     <div class="row" th:if="${app != null}">
-        <div class="col-md-8">
-            <div class="card">
+        <div class="col-lg-8">
+            <!-- Basic Information -->
+            <div class="card card-special">
                 <div class="card-header">
-                    <h5 class="mb-0">Thông Tin Cơ Bản</h5>
+                    <h5 class="mb-0">
+                        <i class="fas fa-user-circle"></i>
+                        Thông Tin Ứng Viên
+                    </h5>
                 </div>
                 <div class="card-body">
-                    <div class="row mb-3">
+                    <div class="row">
                         <div class="col-md-6">
-                            <div class="d-flex mb-3">
-                                <span class="info-label">Ứng viên:</span>
-                                <span th:text="${app.candidate != null ? app.candidate.name : 'Không có thông tin'}"></span>
+                            <div class="info-row">
+                                <span class="info-label">
+                                    <i class="fas fa-user"></i>
+                                    Họ và tên:
+                                </span>
+                                <span class="info-value" th:text="${app.candidate != null ? app.candidate.name : 'Không có thông tin'}"></span>
                             </div>
-                            <div class="d-flex mb-3">
-                                <span class="info-label">Email:</span>
-                                <span th:text="${app.candidate != null ? app.candidate.email : 'Không có thông tin'}"></span>
+                            <div class="info-row">
+                                <span class="info-label">
+                                    <i class="fas fa-envelope"></i>
+                                    Email:
+                                </span>
+                                <span class="info-value" th:text="${app.candidate != null ? app.candidate.email : 'Không có thông tin'}"></span>
                             </div>
-                            <div class="d-flex mb-3">
-                                <span class="info-label">SĐT:</span>
-                                <span th:text="${app.candidate != null && app.candidate.phone != null ? app.candidate.phone : 'Chưa cập nhật'}"></span>
+                            <div class="info-row">
+                                <span class="info-label">
+                                    <i class="fas fa-phone"></i>
+                                    Số điện thoại:
+                                </span>
+                                <span class="info-value" th:text="${app.candidate != null && app.candidate.phone != null ? app.candidate.phone : 'Chưa cập nhật'}"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="d-flex mb-3">
-                                <span class="info-label">Vị trí:</span>
-                                <span th:text="${app.recruitmentPosition != null ? app.recruitmentPosition.name : 'Không có thông tin'}"></span>
+                            <div class="info-row">
+                                <span class="info-label">
+                                    <i class="fas fa-briefcase"></i>
+                                    Vị trí ứng tuyển:
+                                </span>
+                                <span class="info-value" th:text="${app.recruitmentPosition != null ? app.recruitmentPosition.name : 'Không có thông tin'}"></span>
                             </div>
-                            <div class="d-flex mb-3">
-                                <span class="info-label">Trạng thái:</span>
+                            <div class="info-row">
+                                <span class="info-label">
+                                    <i class="fas fa-flag"></i>
+                                    Trạng thái:
+                                </span>
                                 <span th:switch="${app.progress.name()}" class="status-badge">
-                                    <span th:case="pending" class="status-pending">Chờ xử lý</span>
-                                    <span th:case="handling" class="status-handling">Đang xử lý</span>
-                                    <span th:case="interviewing" class="status-interviewing">Phỏng vấn</span>
-                                    <span th:case="done" class="status-done">Hoàn thành</span>
-                                    <span th:case="*" class="badge bg-secondary">Không xác định</span>
+                                    <span th:case="pending" class="status-pending">
+                                        <i class="fas fa-clock"></i>Chờ xử lý
+                                    </span>
+                                    <span th:case="handling" class="status-handling">
+                                        <i class="fas fa-cog fa-spin"></i>Đang xử lý
+                                    </span>
+                                    <span th:case="interviewing" class="status-interviewing">
+                                        <i class="fas fa-users"></i>Phỏng vấn
+                                    </span>
+                                    <span th:case="done" class="status-done">
+                                        <i class="fas fa-check"></i>Hoàn thành
+                                    </span>
+                                    <span th:case="*" class="badge bg-secondary">
+                                        <i class="fas fa-question"></i>Không xác định
+                                    </span>
                                 </span>
                             </div>
-                            <div class="d-flex mb-3">
-                                <span class="info-label">Ngày tạo:</span>
-                                <span th:text="${app.createAt}"></span>
+                            <div class="info-row">
+                                <span class="info-label">
+                                    <i class="fas fa-calendar-plus"></i>
+                                    Ngày nộp đơn:
+                                </span>
+                                <span class="info-value" th:text="${app.createAt}"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="d-flex mb-3">
-                                <span class="info-label">CV:</span>
-                                <a th:if="${app.cvUrl != null and !#strings.isEmpty(app.cvUrl)}"
-                                   th:href="${app.cvUrl}"
-                                   target="_blank"
-                                   class="btn btn-sm btn-primary">
-                                    <i class="fas fa-file-pdf me-2"></i>Xem CV
-                                </a>
-                                <span th:if="${app.cvUrl == null or #strings.isEmpty(app.cvUrl)}"
-                                      class="text-muted">Không có CV</span>
-                            </div>
+                    <div class="info-row">
+                        <span class="info-label">
+                            <i class="fas fa-file-pdf"></i>
+                            Hồ sơ CV:
+                        </span>
+                        <div class="info-value">
+                            <a th:if="${app.cvUrl != null and !#strings.isEmpty(app.cvUrl)}"
+                               th:href="${app.cvUrl}"
+                               target="_blank"
+                               class="cv-link">
+                                <i class="fas fa-external-link-alt"></i>
+                                Xem CV trực tuyến
+                            </a>
+                            <span th:if="${app.cvUrl == null or #strings.isEmpty(app.cvUrl)}"
+                                  class="text-muted">Chưa có CV được tải lên</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Interview Info -->
-            <div class="card" th:if="${app.progress != null && (app.progress.name() == 'interviewing' || app.progress.name() == 'done')}">
+            <!-- Interview Information -->
+            <div class="card interview-info" th:if="${app.progress != null && (app.progress.name() == 'interviewing' || app.progress.name() == 'done')}">
                 <div class="card-header">
-                    <h5 class="mb-0">Thông Tin Phỏng Vấn</h5>
+                    <h5 class="mb-0">
+                        <i class="fas fa-calendar-check"></i>
+                        Thông Tin Phỏng Vấn
+                    </h5>
                 </div>
                 <div class="card-body">
-                    <div class="row mb-3">
+                    <div class="row">
                         <div class="col-md-6">
-                            <div class="d-flex mb-3">
-                                <span class="info-label">Ngày gửi thông báo:</span>
-                                <span th:text="${app.interviewRequestDate }"></span>
+                            <div class="info-row">
+                                <span class="info-label">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Ngày gửi thông báo:
+                                </span>
+                                <span class="info-value" th:text="${app.interviewRequestDate}"></span>
                             </div>
-                            <div class="d-flex mb-3">
-                                <span class="info-label">Link phỏng vấn:</span>
-                                <a th:if="${app.interviewLink != null and !#strings.isEmpty(app.interviewLink)}"
-                                   th:href="${app.interviewLink}"
-                                   target="_blank"
-                                   th:text="${app.interviewLink}"></a>
-                                <span th:if="${app.interviewLink == null or #strings.isEmpty(app.interviewLink)}"
-                                      class="text-muted">Chưa có</span>
+                            <div class="info-row">
+                                <span class="info-label">
+                                    <i class="fas fa-video"></i>
+                                    Link phỏng vấn:
+                                </span>
+                                <div class="info-value">
+                                    <a th:if="${app.interviewLink != null and !#strings.isEmpty(app.interviewLink)}"
+                                       th:href="${app.interviewLink}"
+                                       target="_blank"
+                                       class="cv-link">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        Tham gia phỏng vấn
+                                    </a>
+                                    <span th:if="${app.interviewLink == null or #strings.isEmpty(app.interviewLink)}"
+                                          class="text-muted">Chưa có link</span>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="d-flex mb-3">
-                                <span class="info-label">Thời gian PV:</span>
-                                <span th:text="${app.interviewTime }"></span>
+                            <div class="info-row">
+                                <span class="info-label">
+                                    <i class="fas fa-clock"></i>
+                                    Thời gian phỏng vấn:
+                                </span>
+                                <span class="info-value" th:text="${app.interviewTime}"></span>
                             </div>
-                            <div class="d-flex mb-3" th:if="${app.interviewResult}">
-                                <span class="info-label">Kết quả:</span>
-                                <span th:text="${app.interviewResult}"></span>
+                            <div class="info-row" th:if="${app.interviewResult}">
+                                <span class="info-label">
+                                    <i class="fas fa-poll"></i>
+                                    Kết quả:
+                                </span>
+                                <span class="info-value" th:text="${app.interviewResult}"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="row" th:if="${app.interviewResultNote != null and !#strings.isEmpty(app.interviewResultNote)}">
-                        <div class="col-12">
-                            <div class="d-flex mb-3">
-                                <span class="info-label">Ghi chú:</span>
-                                <span th:text="${app.interviewResultNote}"></span>
-                            </div>
-                        </div>
+                    <div class="info-row" th:if="${app.interviewResultNote != null and !#strings.isEmpty(app.interviewResultNote)}">
+                        <span class="info-label">
+                            <i class="fas fa-sticky-note"></i>
+                            Ghi chú phỏng vấn:
+                        </span>
+                        <span class="info-value" th:text="${app.interviewResultNote}"></span>
                     </div>
                 </div>
             </div>
 
-            <!-- Application Timeline -->
+            <!-- Timeline -->
             <div class="card">
                 <div class="card-header">
-                    <h5 class="mb-0">Lịch Sử Đơn</h5>
+                    <h5 class="mb-0">
+                        <i class="fas fa-history"></i>
+                        Lịch Sử Tiến Trình
+                    </h5>
                 </div>
                 <div class="card-body">
                     <div class="timeline">
                         <div class="timeline-item">
                             <div class="timeline-date">
                                 <i class="fas fa-calendar-alt me-2"></i>
-                                <span th:text="${app.createAt }"></span>
+                                <span th:text="${app.createAt}"></span>
                             </div>
                             <div class="timeline-content">
-                                <strong>Đơn được tạo</strong>
-                                <p>Ứng viên nộp đơn ứng tuyển</p>
+                                <strong>Đơn ứng tuyển được tạo</strong>
+                                <p class="mb-0 mt-2 text-muted">Ứng viên đã nộp đơn ứng tuyển và hồ sơ</p>
                             </div>
                         </div>
 
                         <div class="timeline-item" th:if="${app.progress != null && app.progress.name() != 'pending'}">
                             <div class="timeline-date">
                                 <i class="fas fa-calendar-alt me-2"></i>
-                                <span th:text="${app.updateAt }"></span>
+                                <span th:text="${app.updateAt}"></span>
                             </div>
                             <div class="timeline-content">
-                                <strong>Chuyển trạng thái</strong>
-                                <p th:text="'Đơn được chuyển sang ' + ${app.progress.name()}"></p>
+                                <strong>Chuyển đổi trạng thái</strong>
+                                <p class="mb-0 mt-2 text-muted" th:text="'Đơn được chuyển sang trạng thái: ' + ${app.progress.name()}"></p>
                             </div>
                         </div>
 
@@ -317,26 +242,27 @@
                                 <span th:text="${app.interviewRequestDate}"></span>
                             </div>
                             <div class="timeline-content">
-                                <strong>Gửi thông báo phỏng vấn</strong>
-                                <p>Đã gửi thông tin phỏng vấn cho ứng viên</p>
+                                <strong>Gửi lời mời phỏng vấn</strong>
+                                <p class="mb-0 mt-2 text-muted">Đã gửi thông tin lịch phỏng vấn đến ứng viên</p>
                             </div>
                         </div>
+
                         <div class="timeline-item" th:if="${app.interviewResultNote != null}">
                             <div class="timeline-content">
-                                <strong>Ứng viên phản hồi</strong>
-                                <span th:text="${app.interviewResultNote}"></span>
+                                <strong>Phản hồi từ ứng viên</strong>
+                                <p class="mb-0 mt-2" th:text="${app.interviewResultNote}"></p>
                             </div>
                         </div>
 
                         <div class="timeline-item" th:if="${app.interviewResult != null and !#strings.isEmpty(app.interviewResult)}">
                             <div class="timeline-date">
                                 <i class="fas fa-calendar-alt me-2"></i>
-                                <span th:text="${app.updateAt }"></span>
+                                <span th:text="${app.updateAt}"></span>
                             </div>
                             <div class="timeline-content">
-                                <strong>Cập nhật kết quả</strong>
-                                <p th:text="'Kết quả: ' + ${app.interviewResult}"></p>
-                                <p th:if="${app.interviewResultNote != null and !#strings.isEmpty(app.interviewResultNote)}" th:text="${app.interviewResultNote}"></p>
+                                <strong>Cập nhật kết quả phỏng vấn</strong>
+                                <p class="mb-2 mt-2" th:text="'Kết quả: ' + ${app.interviewResult}"></p>
+                                <p class="mb-0 text-muted" th:if="${app.interviewResultNote != null and !#strings.isEmpty(app.interviewResultNote)}" th:text="${app.interviewResultNote}"></p>
                             </div>
                         </div>
                     </div>
@@ -345,113 +271,190 @@
         </div>
 
         <!-- Action Panel -->
-        <div class="col-md-4">
-            <!-- Move to Interviewing (for handling status) -->
-            <div class="card mb-4" th:if="${app.progress != null && app.progress.name() == 'handling'}">
-                <div class="card-header">
-                    <h5 class="mb-0">Chuyển Sang Phỏng Vấn</h5>
+        <div class="col-lg-4">
+            <div class="action-panel">
+                <!-- Move to Interview -->
+                <div class="card" th:if="${app.progress != null && app.progress.name() == 'handling'}">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-user-tie"></i>
+                            Lên Lịch Phỏng Vấn
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/admin/applications/interview/{id}(id=${app.id})}" method="post">
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    <i class="fas fa-paper-plane me-2"></i>
+                                    Ngày gửi thông báo
+                                </label>
+                                <input type="datetime-local" class="form-control" name="interviewRequestDate" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    <i class="fas fa-link me-2"></i>
+                                    Link phỏng vấn
+                                </label>
+                                <input type="url" class="form-control" name="interviewLink" required placeholder="https://meet.google.com/...">
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">
+                                    <i class="fas fa-calendar-check me-2"></i>
+                                    Thời gian phỏng vấn
+                                </label>
+                                <input type="datetime-local" class="form-control" name="interviewTime" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-user-tie me-2"></i>
+                                Lên Lịch Phỏng Vấn
+                            </button>
+                        </form>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <form th:action="@{/admin/applications/interview/{id}(id=${app.id})}" method="post">
 
-                        <div class="mb-3">
-                            <label class="form-label">Ngày gửi thông báo</label>
-                            <input type="datetime-local" class="form-control" name="interviewRequestDate" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Link phỏng vấn</label>
-                            <input type="url" class="form-control" name="interviewLink" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Thời gian phỏng vấn</label>
-                            <input type="datetime-local" class="form-control" name="interviewTime" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100 action-btn">
-                            <i class="fas fa-user-tie me-2"></i>Chuyển Sang Phỏng Vấn
-                        </button>
-                    </form>
+                <!-- Update Interview Result -->
+                <div class="card" th:if="${app.progress != null && app.progress.name() == 'interviewing'}">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-clipboard-check"></i>
+                            Cập Nhật Kết Quả
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/admin/applications/result/{id}(id=${app.id})}" method="post">
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    <i class="fas fa-poll me-2"></i>
+                                    Kết quả phỏng vấn
+                                </label>
+                                <select class="form-select" name="result" required>
+                                    <option value="">-- Chọn kết quả --</option>
+                                    <option value="Đậu">✅ Đậu - Ứng viên phù hợp</option>
+                                    <option value="Rớt">❌ Rớt - Không phù hợp</option>
+                                    <option value="Dự bị">⏳ Dự bị - Cân nhắc thêm</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">
+                                    <i class="fas fa-comment me-2"></i>
+                                    Ghi chú chi tiết
+                                </label>
+                                <textarea class="form-control" name="note" rows="4" placeholder="Nhập đánh giá chi tiết về ứng viên..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success w-100">
+                                <i class="fas fa-check-circle me-2"></i>
+                                Lưu Kết Quả
+                            </button>
+                        </form>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Update Result (for interviewing status) -->
-            <div class="card mb-4" th:if="${app.progress != null && app.progress.name() == 'interviewing'}">
-                <div class="card-header">
-                    <h5 class="mb-0">Cập Nhật Kết Quả</h5>
-                </div>
-                <div class="card-body">
-                    <form th:action="@{/admin/applications/result/{id}(id=${app.id})}" method="post">
-                        <div class="mb-3">
-                            <label class="form-label">Kết quả</label>
-                            <select class="form-select" name="result" required>
-                                <option value="">-- Chọn kết quả --</option>
-                                <option value="Đậu">Đậu</option>
-                                <option value="Rớt">Rớt</option>
-                                <option value="Dự bị">Dự bị</option>
-                            </select>
+                <!-- Application Status - Completed -->
+                <div class="card done-section" th:if="${app.progress != null && app.progress.name() == 'done'}">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-flag-checkered"></i>
+                            Trạng Thái Đơn
+                        </h5>
+                    </div>
+                    <div class="card-body completed-status">
+                        <i class="fas fa-check-circle text-success"></i>
+                        <h4 class="text-success mb-3">Đã Hoàn Thành</h4>
+                        <div class="alert alert-success" th:if="${app.interviewResult != null and !#strings.isEmpty(app.interviewResult)}">
+                            <strong>Kết quả cuối cùng:</strong><br>
+                            <span th:text="${app.interviewResult}" class="fs-5"></span>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Ghi chú</label>
-                            <textarea class="form-control" name="note" rows="3"></textarea>
+                        <div class="alert alert-warning" th:if="${app.interviewResult == null or #strings.isEmpty(app.interviewResult)}">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            Chưa có kết quả được cập nhật
                         </div>
-                        <button type="submit" class="btn btn-success w-100 action-btn">
-                            <i class="fas fa-check-circle me-2"></i>Cập Nhật Kết Quả
-                        </button>
-                    </form>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Cancel Application -->
-            <div class="card" th:if="${app.destroyAt == null}">
-                <div class="card-header bg-danger text-white">
-                    <h5 class="mb-0">Huỷ Đơn Ứng Tuyển</h5>
-                </div>
-                <div class="card-body">
-                    <form th:action="@{/admin/applications/cancel/{id}(id=${app.id})}" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn huỷ đơn ứng tuyển này?')">
-                        <div class="mb-3">
-                            <label class="form-label">Lý do huỷ</label>
-                            <textarea class="form-control" name="reason" rows="3" required placeholder="Nhập lý do huỷ đơn ứng tuyển..."></textarea>
+                <!-- Application Status - Cancelled -->
+                <div class="card" th:if="${app.destroyAt != null}">
+                    <div class="card-header bg-dark text-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-ban"></i>
+                            Đơn Đã Hủy
+                        </h5>
+                    </div>
+                    <div class="card-body cancelled-status">
+                        <i class="fas fa-times-circle text-danger"></i>
+                        <h4 class="text-danger mb-3">Đã Bị Hủy</h4>
+                        <div class="alert alert-danger">
+                            <p class="mb-2">
+                                <strong><i class="fas fa-calendar-times me-2"></i>Ngày hủy:</strong><br>
+                                <span th:text="${app.destroyAt}"></span>
+                            </p>
+                            <div th:if="${app.destroyReason != null and !#strings.isEmpty(app.destroyReason)}">
+                                <strong><i class="fas fa-comment me-2"></i>Lý do hủy:</strong><br>
+                                <span th:text="${app.destroyReason}"></span>
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-danger w-100 action-btn">
-                            <i class="fas fa-times me-2"></i>Huỷ Đơn Ứng Tuyển
-                        </button>
-                    </form>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Application Status (for done status) -->
-            <div class="card" th:if="${app.progress != null && app.progress.name() == 'done'}">
-                <div class="card-header bg-success text-white">
-                    <h5 class="mb-0">Trạng Thái Đơn</h5>
+                <!-- Cancel Application Form -->
+                <div class="card cancel-section" th:if="${app.destroyAt == null}">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-times-circle"></i>
+                            Hủy Đơn Ứng Tuyển
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>Cảnh báo:</strong> Hành động này không thể hoàn tác!
+                        </div>
+                        <form th:action="@{/admin/applications/cancel/{id}(id=${app.id})}" method="post"
+                              onsubmit="return confirm('⚠️ Bạn có chắc chắn muốn hủy đơn ứng tuyển này?\n\nHành động này không thể hoàn tác!')">
+                            <div class="mb-4">
+                                <label class="form-label">
+                                    <i class="fas fa-edit me-2"></i>
+                                    Lý do hủy đơn
+                                </label>
+                                <textarea class="form-control" name="reason" rows="4" required
+                                          placeholder="Vui lòng nhập lý do hủy đơn ứng tuyển (bắt buộc)..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-danger w-100">
+                                <i class="fas fa-trash-alt me-2"></i>
+                                Hủy Đơn Ứng Tuyển
+                            </button>
+                        </form>
+                    </div>
                 </div>
-                <div class="card-body text-center">
-                    <i class="fas fa-check-circle fa-4x text-success mb-3"></i>
-                    <h5>Đơn đã hoàn thành</h5>
-                    <p class="mb-0" th:if="${app.interviewResult != null and !#strings.isEmpty(app.interviewResult)}" th:text="'Kết quả: ' + ${app.interviewResult}"></p>
-                    <p class="mb-0" th:if="${app.interviewResult == null or #strings.isEmpty(app.interviewResult)}">Chưa có kết quả</p>
-                </div>
-            </div>
 
-            <!-- Cancelled Status -->
-            <div class="card" th:if="${app.destroyAt != null}">
-                <div class="card-header bg-dark text-white">
-                    <h5 class="mb-0">Đơn Đã Huỷ</h5>
-                </div>
-                <div class="card-body text-center">
-                    <i class="fas fa-times-circle fa-4x text-danger mb-3"></i>
-                    <h5>Đơn đã bị huỷ</h5>
-                    <p class="mb-2"><strong>Ngày huỷ:</strong> <span th:text="${app.destroyAt}"></span></p>
-                    <p class="mb-0" th:if="${app.destroyReason != null and !#strings.isEmpty(app.destroyReason)}">
-                        <strong>Lý do:</strong> <span th:text="${app.destroyReason}"></span>
-                    </p>
-                </div>
+
+    <!-- Error State -->
+    <div th:if="${app == null}" class="text-center py-5">
+        <div class="card">
+            <div class="card-body">
+                <i class="fas fa-exclamation-triangle fa-5x text-warning mb-4"></i>
+                <h3 class="text-muted">Không tìm thấy đơn ứng tuyển</h3>
+                <p class="text-muted">Đơn ứng tuyển không tồn tại hoặc đã bị xóa.</p>
+                <a th:href="@{/admin/applications}" class="btn btn-primary">
+                    <i class="fas fa-arrow-left me-2"></i>
+                    Quay lại danh sách
+                </a>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Floating Action Button -->
+<div class="floating-action d-lg-none">
+    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileActions">
+        <i class="fas fa-cogs"></i>
+    </button>
+</div>
+
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Function to toggle sidebar on mobile
+    // Toggle sidebar on mobile
     function toggleSidebar() {
         const sidebar = document.querySelector('.sidebar');
         sidebar.classList.toggle('show');
@@ -462,11 +465,242 @@
         const alerts = document.querySelectorAll('.alert');
         alerts.forEach(function(alert) {
             setTimeout(function() {
-                const bsAlert = new bootstrap.Alert(alert);
-                bsAlert.close();
+                if (alert.classList.contains('show')) {
+                    const bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                }
             }, 5000);
+        });
+
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add loading states to form submissions
+        const forms = document.querySelectorAll('form');
+        forms.forEach(form => {
+            form.addEventListener('submit', function() {
+                const submitBtn = form.querySelector('button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    const originalText = submitBtn.innerHTML;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Đang xử lý...';
+
+                    // Re-enable after 5 seconds (fallback)
+                    setTimeout(() => {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalText;
+                    }, 5000);
+                }
+            });
+        });
+    });
+
+    // Print application function
+    function printApplication() {
+        const printContent = document.querySelector('.main-content').innerHTML;
+        const originalContent = document.body.innerHTML;
+
+        document.body.innerHTML = `
+            <div style="padding: 20px; font-family: Arial, sans-serif;">
+                <h1 style="text-align: center; color: #333; margin-bottom: 30px;">
+                    CHI TIẾT ĐON ỨNG TUYỂN
+                </h1>
+                ${printContent}
+            </div>
+        `;
+
+        window.print();
+        document.body.innerHTML = originalContent;
+        location.reload(); // Reload to restore functionality
+    }
+
+    // Share application function
+    function shareApplication() {
+        if (navigator.share) {
+            navigator.share({
+                title: 'Chi tiết đơn ứng tuyển',
+                text: 'Thông tin chi tiết đơn ứng tuyển',
+                url: window.location.href
+            }).catch(console.error);
+        } else {
+            // Fallback - copy URL to clipboard
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                showToast('Đã sao chép liên kết vào clipboard!', 'success');
+            }).catch(() => {
+                showToast('Không thể sao chép liên kết', 'error');
+            });
+        }
+    }
+
+    // Show toast notification
+    function showToast(message, type = 'info') {
+        const toast = document.createElement('div');
+        toast.className = `alert alert-${type === 'success' ? 'success' : type === 'error' ? 'danger' : 'info'} position-fixed`;
+        toast.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 250px;';
+        toast.innerHTML = `
+            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'} me-2"></i>
+            ${message}
+        `;
+
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+            toast.remove();
+        }, 3000);
+    }
+
+    // Add hover effects for better UX
+    document.addEventListener('DOMContentLoaded', function() {
+        const infoRows = document.querySelectorAll('.info-row');
+        infoRows.forEach(row => {
+            row.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateX(4px)';
+            });
+            row.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateX(0)';
+            });
+        });
+    });
+
+    // Form validation enhancements
+    document.addEventListener('DOMContentLoaded', function() {
+        const forms = document.querySelectorAll('form');
+        forms.forEach(form => {
+            const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+            inputs.forEach(input => {
+                input.addEventListener('invalid', function() {
+                    this.classList.add('is-invalid');
+                });
+                input.addEventListener('input', function() {
+                    if (this.validity.valid) {
+                        this.classList.remove('is-invalid');
+                        this.classList.add('is-valid');
+                    }
+                });
+            });
         });
     });
 </script>
+
+<style>
+    /* Additional responsive styles */
+    @media (max-width: 576px) {
+        .floating-action {
+            bottom: 1rem;
+            right: 1rem;
+        }
+
+        .floating-action .btn {
+            width: 50px;
+            height: 50px;
+            font-size: 1.25rem;
+        }
+
+        .welcome-text {
+            font-size: 1.75rem;
+        }
+
+        .card-body {
+            padding: 1rem;
+        }
+
+        .info-row {
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .status-badge {
+            font-size: 0.8rem;
+            padding: 0.4rem 0.8rem;
+        }
+
+        .timeline {
+            padding-left: 1.5rem;
+        }
+
+        .timeline-item {
+            margin-left: 0.5rem;
+        }
+
+        .timeline-content {
+            padding: 1rem;
+        }
+    }
+
+    /* Print styles */
+    @media print {
+        .sidebar,
+        .floating-action,
+        .btn,
+        .alert,
+        .offcanvas,
+        .card-header {
+            display: none !important;
+        }
+
+        .main-content {
+            margin-left: 0 !important;
+            padding: 0 !important;
+        }
+
+        .card {
+            box-shadow: none !important;
+            border: 1px solid #ddd !important;
+            margin-bottom: 1rem !important;
+            page-break-inside: avoid;
+        }
+
+        .card-body {
+            padding: 1rem !important;
+        }
+
+        body {
+            background: white !important;
+        }
+
+        .timeline::before {
+            background: #333 !important;
+        }
+
+        .timeline-item::before {
+            background: #333 !important;
+        }
+    }
+
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+        .card {
+            border: 2px solid #000 !important;
+        }
+
+        .status-badge {
+            border: 1px solid #000 !important;
+        }
+
+        .btn {
+            border: 2px solid !important;
+        }
+    }
+
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+</style>
 </body>
 </html>

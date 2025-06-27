@@ -43,7 +43,7 @@ public class RecruitmentPositionDto {
 
     private Boolean isDeleted;
 
-    private Set<Integer> technologyIds; // Dùng để nhận list id của technology từ form
+    private Set<Integer> technologyIds;
 
     // Chuyển đổi từ Entity sang DTO
     public RecruitmentPositionDto(RecruitmentPosition position) {

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 public class CandidateApplicationController {
     private final CandidateApplicationService applicationService;
-    private static final int DEFAULT_PAGE_SIZE = 10;
+    private static final int DEFAULT_PAGE_SIZE = 5;
 
     @GetMapping
     public String viewApplications(

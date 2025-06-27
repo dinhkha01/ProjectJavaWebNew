@@ -270,12 +270,6 @@
           <option value="name:asc" th:selected="${pageDto.sortBy == 'name' and pageDto.direction == 'asc'}">Tên (A-Z)</option>
           <option value="name:desc" th:selected="${pageDto.sortBy == 'name' and pageDto.direction == 'desc'}">Tên (Z-A)</option>
         </select>
-
-        <select class="form-select" id="sizeSelect" onchange="updatePageSize()">
-          <option value="5" th:selected="${pageDto.size == 5}">5/trang</option>
-          <option value="10" th:selected="${pageDto.size == 10}">10/trang</option>
-          <option value="20" th:selected="${pageDto.size == 20}">20/trang</option>
-        </select>
       </div>
     </div>
 

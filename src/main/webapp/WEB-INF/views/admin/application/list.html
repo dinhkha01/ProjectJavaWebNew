@@ -6,198 +6,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/sidebar.css">
-    <style>
-        .main-content {
-            padding: 1.5rem;
-            margin-left: 280px;
-            transition: margin-left 0.3s;
-        }
+    <link rel="stylesheet" href="/static/css/admin/applicationList.css">
 
-        @media (max-width: 768px) {
-            .main-content {
-                margin-left: 0;
-                padding: 1rem;
-            }
-        }
-
-        .dashboard-header {
-            margin-bottom: 1.5rem;
-        }
-
-        .welcome-text {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .card {
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            border: none;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-header {
-            background: linear-gradient(135deg, #4f5d73 0%, #2c3e50 100%);
-            color: white;
-            border-radius: 10px 10px 0 0 !important;
-            padding: 1rem 1.5rem;
-        }
-
-        .card-header h5 {
-            font-weight: 500;
-            margin-bottom: 0;
-        }
-
-        .application-logo {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #e9ecef;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-
-        .action-buttons .btn {
-            padding: 0.25rem 0.5rem;
-            font-size: 0.875rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .search-box {
-            max-width: 300px;
-        }
-
-        .table-modern {
-            border-collapse: separate;
-            border-spacing: 0 0.5rem;
-        }
-
-        .table-modern thead th {
-            background-color: #f8f9fa;
-            border-top: none;
-            font-weight: 600;
-            color: #4f5d73;
-        }
-
-        .table-modern tbody tr {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .table-modern tbody tr:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-        }
-
-        .table-modern tbody td {
-            vertical-align: middle;
-            border-top: none;
-        }
-
-        .table-modern tbody tr:first-child td:first-child {
-            border-top-left-radius: 8px;
-            border-bottom-left-radius: 8px;
-        }
-
-        .table-modern tbody tr:first-child td:last-child {
-            border-top-right-radius: 8px;
-            border-bottom-right-radius: 8px;
-        }
-
-        .pagination .page-item .page-link {
-            border-radius: 6px;
-            margin: 0 3px;
-            border: none;
-            color: #4f5d73;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        .pagination .page-item.active .page-link {
-            background: linear-gradient(135deg, #4f5d73 0%, #2c3e50 100%);
-            border-color: transparent;
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
-            border: none;
-            box-shadow: 0 2px 6px rgba(40, 167, 69, 0.3);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #4f5d73 0%, #2c3e50 100%);
-            border: none;
-            box-shadow: 0 2px 6px rgba(79, 93, 115, 0.3);
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #dc3545 0%, #bd2130 100%);
-            border: none;
-            box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3);
-        }
-
-        .status-badge {
-            padding: 0.35em 0.65em;
-            font-size: 0.75em;
-            font-weight: 600;
-            border-radius: 0.25rem;
-        }
-
-        .status-pending {
-            background-color: #fff3cd;
-            color: #856404;
-        }
-
-        .status-handling {
-            background-color: #cce5ff;
-            color: #004085;
-        }
-
-        .status-interviewing {
-            background-color: #d4edda;
-            color: #155724;
-        }
-
-        .status-done {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-
-        .stats-card {
-            background: white;
-            border-radius: 10px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
-            margin-bottom: 1.5rem;
-        }
-
-        .stats-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .stats-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-            color: white;
-        }
-
-        .stats-icon.total { background: linear-gradient(135deg, #4e73df 0%, #224abe 100%); }
-        .stats-icon.pending { background: linear-gradient(135deg, #f6c23e 0%, #dda20a 100%); }
-        .stats-icon.interviewing { background: linear-gradient(135deg, #1cc88a 0%, #13855c 100%); }
-        .stats-icon.done { background: linear-gradient(135deg, #e74a3b 0%, #be2617 100%); }
-    </style>
 </head>
 <body>
 <th:block th:replace="~{fragments/sidebar :: sidebar}"></th:block>
@@ -205,100 +15,59 @@
 
 <div class="main-content">
     <div class="dashboard-header">
-        <div class="row align-items-center">
-            <div class="col-md-8">
-                <h1 class="welcome-text mb-2">Quản Lý Đơn Ứng Tuyển</h1>
-                <p class="text-muted mb-0">Danh sách các đơn ứng tuyển trong hệ thống</p>
-            </div>
-            <div class="col-md-4 text-end">
-                <div class="search-box">
-                    <form th:action="@{/admin/applications}" method="get" class="d-flex">
-                        <input type="text" class="form-control" name="keyword" th:value="${pageDto.keyword}"
-                               placeholder="Tìm kiếm đơn...">
-                        <button class="btn btn-outline-secondary ms-2" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
+        <div class="text-center">
+            <h1 class="welcome-text">Quản Lý Đơn Ứng Tuyển</h1>
+            <p class="subtitle">Danh sách các đơn ứng tuyển trong hệ thống</p>
         </div>
     </div>
 
-    <!-- Statistics Cards -->
-    <div class="row">
-        <div class="col-md-3 col-sm-6">
-            <div class="stats-card">
-                <div class="stats-icon total">
-                    <i class="fas fa-file-alt"></i>
-                </div>
-                <div class="stats-number" th:text="${totalApplications}">0</div>
-                <div class="stats-label">Tổng Đơn</div>
-            </div>
-        </div>
 
-        <div class="col-md-3 col-sm-6">
-            <div class="stats-card">
-                <div class="stats-icon pending">
-                    <i class="fas fa-clock"></i>
+    <!-- Filter Section -->
+    <div class="filter-section">
+        <form th:action="@{/admin/applications}" method="get">
+            <div class="row align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Trạng thái</label>
+                    <select name="progress" class="form-select">
+                        <option value="">Tất cả trạng thái</option>
+                        <option th:each="status : ${progressOptions}"
+                                th:value="${status}"
+                                th:text="${status}"
+                                th:selected="${selectedProgress == status}"></option>
+                    </select>
                 </div>
-                <div class="stats-number" th:text="${pendingApplications}">0</div>
-                <div class="stats-label">Đơn Chờ Xử Lý</div>
-            </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6">
-            <div class="stats-card">
-                <div class="stats-icon interviewing">
-                    <i class="fas fa-user-tie"></i>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Kết quả phỏng vấn</label>
+                    <select name="result" class="form-select">
+                        <option value="">Tất cả kết quả</option>
+                        <option value="Đậu" th:selected="${selectedResult == 'Đậu'}">Đậu</option>
+                        <option value="Rớt" th:selected="${selectedResult == 'Rớt'}">Rớt</option>
+                        <option value="Dự bị" th:selected="${selectedResult == 'Dự bị'}">Dự bị</option>
+                    </select>
                 </div>
-                <div class="stats-number" th:text="${interviewingApplications}">0</div>
-                <div class="stats-label">Đang Phỏng Vấn</div>
-            </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6">
-            <div class="stats-card">
-                <div class="stats-icon done">
-                    <i class="fas fa-check-circle"></i>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary me-2">
+                        <i class="fas fa-filter me-2"></i>Lọc
+                    </button>
+                    <a th:href="@{/admin/applications}" class="btn btn-secondary">
+                        <i class="fas fa-undo me-2"></i>Xóa lọc
+                    </a>
                 </div>
-                <div class="stats-number" th:text="${doneApplications}">0</div>
-                <div class="stats-label">Đơn Hoàn Thành</div>
             </div>
-        </div>
+        </form>
     </div>
 
     <!-- Application Table -->
     <div class="card">
         <div class="card-header">
-            <h5 class="mb-0">Danh Sách Đơn Ứng Tuyển</h5>
+            <h5 class="mb-0">
+                <i class="fas fa-list me-2"></i>Danh Sách Đơn Ứng Tuyển
+            </h5>
         </div>
-        <div class="card-body">
-            <!-- Filter Form -->
-            <form th:action="@{/admin/applications}" method="get" class="mb-4">
-                <div class="row">
-                    <div class="col-md-3">
-                        <select name="progress" class="form-select">
-                            <option value="">Tất cả trạng thái</option>
-                            <option th:each="status : ${progressOptions}"
-                                    th:value="${status}"
-                                    th:text="${status}"
-                                    th:selected="${selectedProgress == status}"></option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" name="result" class="form-control" placeholder="Kết quả phỏng vấn"
-                               th:value="${selectedResult}">
-                    </div>
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-primary">Lọc</button>
-                        <a th:href="@{/admin/applications}" class="btn btn-secondary">Xoá lọc</a>
-                    </div>
-                </div>
-            </form>
-
+        <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table table-modern">
-                    <thead class="table-light">
+                <table class="table table-modern mb-0">
+                    <thead>
                     <tr>
                         <th>STT</th>
                         <th>Ứng Viên</th>
@@ -311,90 +80,102 @@
                     </thead>
                     <tbody>
                     <tr th:each="app,stat : ${pageDto.content}">
-                        <td th:text="${pageDto.currentPage * pageDto.size + stat.index + 1}"></td>
+                        <td>
+                            <span class="fw-bold text-primary" th:text="${pageDto.currentPage * pageDto.size + stat.index + 1}"></span>
+                        </td>
                         <td>
                             <div class="d-flex align-items-center">
                                 <div class="application-logo" th:text="${app.candidateName.substring(0,1)}"></div>
-                                <span th:text="${app.candidateName}"></span>
+                                <div>
+                                    <div class="fw-bold" th:text="${app.candidateName}"></div>
+                                </div>
                             </div>
                         </td>
-                        <td th:text="${app.positionName}"></td>
                         <td>
-                            <span  th:switch="${app.progress.name()}"class="status-badge">
+                            <span class="fw-semibold" th:text="${app.positionName}"></span>
+                        </td>
+                        <td>
+                            <span th:switch="${app.progress.name()}" class="status-badge">
                                 <span th:case="pending" class="status-pending">Chờ xử lý</span>
                                 <span th:case="handling" class="status-handling">Đang xử lý</span>
                                 <span th:case="interviewing" class="status-interviewing">Phỏng vấn</span>
                                 <span th:case="done" class="status-done">Hoàn thành</span>
-
                             </span>
                             <div th:if="${app.interviewResult}" class="small text-muted mt-1">
+                                <i class="fas fa-info-circle me-1"></i>
                                 Kết quả: <span th:text="${app.interviewResult}"></span>
                             </div>
                         </td>
-                        <td th:text="${app.createAt}"></td>
+                        <td>
+                            <span class="text-muted" th:text="${app.createAt}"></span>
+                        </td>
                         <td>
                             <a th:href="${app.cvUrl}" target="_blank" class="btn btn-sm btn-outline-primary">
-                                <i class="fas fa-file-pdf"></i> Xem
+                                <i class="fas fa-file-pdf me-1"></i> Xem CV
                             </a>
                         </td>
                         <td class="text-end action-buttons">
                             <a th:href="@{/admin/applications/view/{id}(id=${app.id})}"
-                               class="btn btn-sm btn-primary me-1">
+                               class="btn btn-sm btn-primary" title="Xem chi tiết">
                                 <i class="fas fa-eye"></i>
                             </a>
-                            <a th:if="${app.destroyAt == null}"
-                               th:href="@{/admin/applications/cancel/{id}(id=${app.id}, reason='Hủy bởi quản trị viên')}"
-                               class="btn btn-sm btn-danger"
-                               onclick="return confirm('Bạn chắc chắn muốn huỷ đơn này?')">
-                                <i class="fas fa-times"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr th:if="${#lists.isEmpty(pageDto.content)}">
-                        <td colspan="7" class="text-center text-muted py-4">
-                            <i class="fas fa-info-circle fa-2x mb-3"></i>
-                            <p>Không tìm thấy đơn ứng tuyển nào</p>
                         </td>
                     </tr>
                     </tbody>
                 </table>
+
+                <div th:if="${#lists.isEmpty(pageDto.content)}" class="empty-state">
+                    <i class="fas fa-search"></i>
+                    <h4>Không tìm thấy đơn ứng tuyển nào</h4>
+                    <p>Hãy thử điều chỉnh bộ lọc hoặc thêm đơn ứng tuyển mới</p>
+                </div>
             </div>
 
             <!-- Pagination -->
-            <nav th:if="${pageDto.totalPages > 1}">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item" th:classappend="${pageDto.currentPage == 0} ? 'disabled' : ''">
-                        <a class="page-link" th:href="@{/admin/applications(size=${pageDto.size},page=0,progress=${selectedProgress},result=${selectedResult})}">Đầu</a>
-                    </li>
-                    <li class="page-item" th:classappend="${pageDto.currentPage == 0} ? 'disabled' : ''">
-                        <a class="page-link" th:href="@{/admin/applications(size=${pageDto.size},page=${pageDto.currentPage+-1},progress=${selectedProgress},result=${selectedResult})}">Trước</a>
-                    </li>
-                    <li class="page-item" th:each="i : ${#numbers.sequence(1, pageDto.totalPages)}"
-                        th:classappend="${i == pageDto.currentPage+1} ? 'active' : ''">
-                        <a class="page-link" th:href="@{/admin/applications(size=${pageDto.size},page=${i+-1},progress=${selectedProgress},result=${selectedResult})}"
-                           th:text="${i}"></a>
-                    </li>
-                    <li class="page-item" th:classappend="${pageDto.currentPage == pageDto.totalPages+-1} ? 'disabled' : ''">
-                        <a class="page-link" th:href="@{/admin/applications(size=${pageDto.size},page=${pageDto.currentPage+1},progress=${selectedProgress},result=${selectedResult})}">Sau</a>
-                    </li>
-                    <li class="page-item" th:classappend="${pageDto.currentPage == pageDto.totalPages+-1} ? 'disabled' : ''">
-                        <a class="page-link" th:href="@{/admin/applications(size=${pageDto.size},page=${pageDto.totalPages+-1},progress=${selectedProgress},result=${selectedResult})}">Cuối</a>
-                    </li>
-                </ul>
-            </nav>
+            <div th:if="${pageDto.totalPages > 1}" class="p-4">
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" th:classappend="${pageDto.currentPage == 0} ? 'disabled' : ''">
+                            <a class="page-link" th:href="@{/admin/applications(size=${pageDto.size},page=0,progress=${selectedProgress},result=${selectedResult})}">
+                                <i class="fas fa-angle-double-left"></i>
+                            </a>
+                        </li>
+                        <li class="page-item" th:classappend="${pageDto.currentPage == 0} ? 'disabled' : ''">
+                            <a class="page-link" th:href="@{/admin/applications(size=${pageDto.size},page=${pageDto.currentPage+-1},progress=${selectedProgress},result=${selectedResult})}">
+                                <i class="fas fa-angle-left"></i>
+                            </a>
+                        </li>
+                        <li class="page-item" th:each="i : ${#numbers.sequence(1, pageDto.totalPages)}"
+                            th:classappend="${i == pageDto.currentPage+1} ? 'active' : ''">
+                            <a class="page-link" th:href="@{/admin/applications(size=${pageDto.size},page=${i+-1},progress=${selectedProgress},result=${selectedResult})}"
+                               th:text="${i}"></a>
+                        </li>
+                        <li class="page-item" th:classappend="${pageDto.currentPage == pageDto.totalPages+-1} ? 'disabled' : ''">
+                            <a class="page-link" th:href="@{/admin/applications(size=${pageDto.size},page=${pageDto.currentPage+1},progress=${selectedProgress},result=${selectedResult})}">
+                                <i class="fas fa-angle-right"></i>
+                            </a>
+                        </li>
+                        <li class="page-item" th:classappend="${pageDto.currentPage == pageDto.totalPages+-1} ? 'disabled' : ''">
+                            <a class="page-link" th:href="@{/admin/applications(size=${pageDto.size},page=${pageDto.totalPages+-1},progress=${selectedProgress},result=${selectedResult})}">
+                                <i class="fas fa-angle-double-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- Flash Messages -->
 <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
-    <div th:if="${param.successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+    <div th:if="${param.successMessage}" class="alert alert-success alert-dismissible fade show flash-message" role="alert">
         <i class="fas fa-check-circle me-2"></i>
         <span th:text="${param.successMessage}"></span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    <div th:if="${param.errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <div th:if="${param.errorMessage}" class="alert alert-danger alert-dismissible fade show flash-message" role="alert">
         <i class="fas fa-exclamation-circle me-2"></i>
         <span th:text="${param.errorMessage}"></span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -416,7 +197,7 @@
         counters.forEach(counter => {
             const target = parseInt(counter.textContent);
             let current = 0;
-            const increment = target / 100;
+            const increment = target / 80;
 
             const timer = setInterval(() => {
                 current += increment;
@@ -426,7 +207,24 @@
                 } else {
                     counter.textContent = Math.floor(current).toLocaleString();
                 }
-            }, 20);
+            }, 25);
+        });
+
+        // Animate cards on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        document.querySelectorAll('.stats-card, .card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
         });
     });
 </script>

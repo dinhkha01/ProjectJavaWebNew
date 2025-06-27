@@ -53,13 +53,11 @@ public class RecruitmentPositionService {
     public RecruitmentPositionDto save(RecruitmentPositionDto dto) {
         RecruitmentPosition position = dto.toEntity();
 
-        // Set createdDate if new
+
         if (position.getId() == null) {
             position.setCreatedDate(LocalDate.now());
         }
         position.setLastUpdated(LocalDateTime.now());
-
-        // Xử lý công nghệ
         Set<Technology> technologies = dto.getTechnologyIds().stream()
                 .map(techId -> technologyDao.findById(techId))
                 .collect(Collectors.toSet());

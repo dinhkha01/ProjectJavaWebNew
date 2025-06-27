@@ -6,206 +6,21 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/sidebar.css">
-    <style>
-        .main-content {
-            padding: 1.5rem;
-            margin-left: 280px;
-            transition: margin-left 0.3s;
-        }
+    <link rel="stylesheet" href="/static/css/listPosition.css">
 
-        @media (max-width: 768px) {
-            .main-content {
-                margin-left: 0;
-                padding: 1rem;
-            }
-        }
-
-        .dashboard-header {
-            margin-bottom: 1.5rem;
-        }
-
-        .welcome-text {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .card {
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            border: none;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-header {
-            background: linear-gradient(135deg, #4f5d73 0%, #2c3e50 100%);
-            color: white;
-            border-radius: 10px 10px 0 0 !important;
-            padding: 1rem 1.5rem;
-        }
-
-        .card-header h5 {
-            font-weight: 500;
-            margin-bottom: 0;
-        }
-
-        .position-logo {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #e9ecef;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-
-        .action-buttons .btn {
-            padding: 0.25rem 0.5rem;
-            font-size: 0.875rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .search-box {
-            max-width: 300px;
-        }
-
-        .table-modern {
-            border-collapse: separate;
-            border-spacing: 0 0.5rem;
-        }
-
-        .table-modern thead th {
-            background-color: #f8f9fa;
-            border-top: none;
-            font-weight: 600;
-            color: #4f5d73;
-        }
-
-        .table-modern tbody tr {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .table-modern tbody tr:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-        }
-
-        .table-modern tbody td {
-            vertical-align: middle;
-            border-top: none;
-        }
-
-        .table-modern tbody tr:first-child td:first-child {
-            border-top-left-radius: 8px;
-            border-bottom-left-radius: 8px;
-        }
-
-        .table-modern tbody tr:first-child td:last-child {
-            border-top-right-radius: 8px;
-            border-bottom-right-radius: 8px;
-        }
-
-        .pagination .page-item .page-link {
-            border-radius: 6px;
-            margin: 0 3px;
-            border: none;
-            color: #4f5d73;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        .pagination .page-item.active .page-link {
-            background: linear-gradient(135deg, #4f5d73 0%, #2c3e50 100%);
-            border-color: transparent;
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
-            border: none;
-            box-shadow: 0 2px 6px rgba(40, 167, 69, 0.3);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #4f5d73 0%, #2c3e50 100%);
-            border: none;
-            box-shadow: 0 2px 6px rgba(79, 93, 115, 0.3);
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #dc3545 0%, #bd2130 100%);
-            border: none;
-            box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3);
-        }
-
-        .stats-card {
-            background: white;
-            border-radius: 10px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
-        }
-
-        .stats-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .stats-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .stats-icon.positions { background: linear-gradient(135deg, #4e73df 0%, #224abe 100%); color: white; }
-        .stats-icon.active { background: linear-gradient(135deg, #1cc88a 0%, #13855c 100%); color: white; }
-        .stats-icon.deleted { background: linear-gradient(135deg, #36b9cc 0%, #258391 100%); color: white; }
-        .stats-icon.update { background: linear-gradient(135deg, #f6c23e 0%, #dda20a 100%); color: white; }
-
-        .stats-number {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #2c3e50;
-        }
-
-        .stats-label {
-            font-size: 1rem;
-            color: #6e707e;
-        }
-
-        .content-card {
-            background: white;
-            border-radius: 10px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            margin-bottom: 1.5rem;
-        }
-
-        .tech-badge {
-            margin-right: 5px;
-            margin-bottom: 5px;
-        }
-    </style>
 </head>
 <body>
 <th:block th:replace="~{fragments/sidebar :: sidebar}"></th:block>
 
 <div class="main-content">
-    <div class="dashboard-header">
+    <div class="dashboard-header fade-in-up">
         <div class="row align-items-center">
             <div class="col-md-8">
-                <h1 class="welcome-text mb-2">Quản Lý Vị Trí Tuyển Dụng</h1>
-                <p class="text-muted mb-0">Danh sách các vị trí trong hệ thống</p>
+                <h1 class="welcome-text">Quản Lý Vị Trí Tuyển Dụng</h1>
+                <p class="text-muted mb-0 fs-5">Danh sách các vị trí trong hệ thống</p>
             </div>
             <div class="col-md-4 text-end">
-                <a th:href="@{/admin/positions/add}" class="btn btn-primary">
+                <a th:href="@{/admin/positions/add}" class="btn btn-primary btn-lg">
                     <i class="fas fa-plus me-2"></i>Thêm Vị Trí
                 </a>
             </div>
@@ -215,7 +30,7 @@
     <!-- Statistics Cards -->
     <div class="row mb-4">
         <div class="col-md-3 col-sm-6 mb-4">
-            <div class="stats-card">
+            <div class="stats-card fade-in-up">
                 <div class="stats-icon positions">
                     <i class="fas fa-briefcase"></i>
                 </div>
@@ -225,7 +40,7 @@
         </div>
 
         <div class="col-md-3 col-sm-6 mb-4">
-            <div class="stats-card">
+            <div class="stats-card fade-in-up">
                 <div class="stats-icon active">
                     <i class="fas fa-check-circle"></i>
                 </div>
@@ -235,7 +50,7 @@
         </div>
 
         <div class="col-md-3 col-sm-6 mb-4">
-            <div class="stats-card">
+            <div class="stats-card fade-in-up">
                 <div class="stats-icon deleted">
                     <i class="fas fa-ban"></i>
                 </div>
@@ -243,51 +58,38 @@
                 <div class="stats-label">Vị Trí Đã Xóa</div>
             </div>
         </div>
-
-<!--        <div class="col-md-3 col-sm-6 mb-4">-->
-<!--            <div class="stats-card">-->
-<!--                <div class="stats-icon update">-->
-<!--                    <i class="fas fa-sync-alt"></i>-->
-<!--                </div>-->
-<!--                <div class="stats-number" th:text="${#temporals.format(lastUpdate, 'dd/MM/yyyy HH:mm')}">Hôm nay</div>-->
-<!--                <div class="stats-label">Cập Nhật Gần Nhất</div>-->
-<!--            </div>-->
-<!--        </div>-->
     </div>
 
-    <div class="content-card">
+    <div class="content-card fade-in-up">
         <!-- Search and Filter -->
-        <div class="d-flex justify-content-between mb-4 flex-wrap gap-2">
-            <div class="search-box">
-                <form th:action="@{/admin/positions}" method="get" class="d-flex">
-                    <input type="text" class="form-control" name="keyword" th:value="${pageDto.keyword}"
-                           placeholder="Tìm kiếm vị trí...">
-                    <button class="btn btn-outline-secondary ms-2" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
-            </div>
+        <div class="search-controls">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <form th:action="@{/admin/positions}" method="get" class="d-flex">
+                        <input type="text" class="form-control" name="keyword" th:value="${pageDto.keyword}"
+                               placeholder="Tìm kiếm vị trí...">
+                        <button class="btn btn-outline-secondary ms-2" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
 
-            <div class="d-flex">
+                <div class="col-md-3">
+                    <select class="form-select" id="sortSelect" onchange="updateSort()">
+                        <option value="id:desc" th:selected="${pageDto.sortBy == 'id' and pageDto.direction == 'desc'}">Mới nhất</option>
+                        <option value="minSalary:desc" th:selected="${pageDto.sortBy == 'minSalary' and pageDto.direction == 'desc'}">Lương cao nhất</option>
+                        <option value="expiredDate:asc" th:selected="${pageDto.sortBy == 'expiredDate' and pageDto.direction == 'asc'}">Sắp hết hạn</option>
+                    </select>
+                </div>
 
-                <select class="form-select me-2" id="sortSelect" onchange="updateSort()">
-                    <option value="id:desc" th:selected="${pageDto.sortBy == 'id' and pageDto.direction == 'desc'}">Mới nhất</option>
-                    <option value="minSalary:desc" th:selected="${pageDto.sortBy == 'minSalary' and pageDto.direction == 'desc'}">Lương cao nhất</option>
-                    <option value="expiredDate:asc" th:selected="${pageDto.sortBy == 'expiredDate' and pageDto.direction == 'asc'}">Sắp hết hạn</option>
-                </select>
 
-                <select class="form-select" id="sizeSelect" onchange="updatePageSize()">
-                    <option value="5" th:selected="${pageDto.size == 5}">5/trang</option>
-                    <option value="10" th:selected="${pageDto.size == 10}">10/trang</option>
-                    <option value="20" th:selected="${pageDto.size == 20}">20/trang</option>
-                </select>
             </div>
         </div>
 
         <!-- Position Table -->
         <div class="table-responsive">
             <table class="table table-modern">
-                <thead class="table-light">
+                <thead>
                 <tr>
                     <th>STT</th>
                     <th>Tên Vị Trí</th>
@@ -305,21 +107,28 @@
                     <td>
                         <div class="d-flex align-items-center">
                             <div class="position-logo" th:text="${pos.name.substring(0,1)}"></div>
-                            <span th:text="${pos.name}"></span>
+                            <div>
+                                <div class="fw-bold" th:text="${pos.name}"></div>
+                                <small class="text-muted">Vị trí tuyển dụng</small>
+                            </div>
                         </div>
                     </td>
                     <td>
                         <div>
-              <span th:each="tech : ${pos.technologies}"
-                    class="badge bg-primary tech-badge"
-                    th:text="${tech.name}"></span>
+                            <span th:each="tech : ${pos.technologies}"
+                                  class="badge tech-badge"
+                                  th:text="${tech.name}"></span>
                         </div>
                     </td>
                     <td>
-                        <span th:text="${pos.minSalary} + ' - ' + ${pos.maxSalary}"></span>
+                        <div class="fw-bold" th:text="${pos.minSalary} + ' - ' + ${pos.maxSalary}"></div>
+                        <small class="text-muted">VND/tháng</small>
                     </td>
                     <td th:text="${pos.minExperience}"></td>
-                    <td th:text="${pos.expiredDate?:'chua cap nhat'}">chua cap nhat</td>
+                    <td>
+                        <div th:text="${pos.expiredDate?:'Chưa cập nhật'}"></div>
+                        <small class="text-muted" th:if="${pos.expiredDate}">Còn thời gian</small>
+                    </td>
                     <td>
                         <span th:if="${pos.isDeleted}" class="badge bg-danger">Đã xóa</span>
                         <span th:unless="${pos.isDeleted}" class="badge bg-success">Hoạt động</span>
@@ -342,9 +151,9 @@
                     </td>
                 </tr>
                 <tr th:if="${#lists.isEmpty(pageDto.content)}">
-                    <td colspan="8" class="text-center text-muted py-4">
-                        <i class="fas fa-info-circle fa-2x mb-3"></i>
-                        <p>Không tìm thấy vị trí nào</p>
+                    <td colspan="8" class="empty-state">
+                        <i class="fas fa-info-circle"></i>
+                        <p class="mb-0">Không tìm thấy vị trí nào</p>
                     </td>
                 </tr>
                 </tbody>
@@ -352,7 +161,7 @@
         </div>
 
         <!-- Pagination -->
-        <nav th:if="${pageDto.totalPages > 1}">
+        <nav th:if="${pageDto.totalPages > 1}" class="mt-4">
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:classappend="${pageDto.currentPage == 0} ? 'disabled' : ''">
                     <a class="page-link" th:href="@{${'?page=' + (pageDto.currentPage - 1) +
@@ -427,21 +236,36 @@
     document.addEventListener('DOMContentLoaded', function() {
         const counters = document.querySelectorAll('.stats-number');
 
-        counters.forEach(counter => {
-            const target = parseInt(counter.textContent);
-            let current = 0;
-            const increment = target / 100;
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent) || 0;
+                let current = 0;
+                const increment = target / 50;
 
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    counter.textContent = target.toLocaleString();
-                    clearInterval(timer);
-                } else {
-                    counter.textContent = Math.floor(current).toLocaleString();
-                }
-            }, 20);
-        });
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current);
+                    }
+                }, 30);
+            });
+        };
+
+        // Trigger animation when page loads
+        setTimeout(animateCounters, 200);
+
+        // Auto-hide alerts after 5 seconds
+        setTimeout(() => {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                alert.style.opacity = '0';
+                alert.style.transform = 'translateX(100%)';
+                setTimeout(() => alert.remove(), 300);
+            });
+        }, 5000);
     });
 </script>
 </body>

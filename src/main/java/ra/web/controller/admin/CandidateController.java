@@ -19,7 +19,7 @@ public class CandidateController {
     @GetMapping("")
     public String listCandidates(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "5") int size,
             @RequestParam(defaultValue = "") String keyword,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "desc") String direction,
@@ -73,9 +73,4 @@ public class CandidateController {
         return "redirect:/admin/candidates";
     }
 
-    @GetMapping("/view/{id}")
-    public String viewCandidate(@PathVariable Integer id, Model model) {
-
-        return "admin/candidates/view";
-    }
 }
