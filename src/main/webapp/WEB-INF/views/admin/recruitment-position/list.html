@@ -121,8 +121,7 @@
                         </div>
                     </td>
                     <td>
-                        <div class="fw-bold" th:text="${pos.minSalary} + ' - ' + ${pos.maxSalary}"></div>
-                        <small class="text-muted">VND/tháng</small>
+                        <div class="fw-bold" th:text="${pos.minSalary}+'$' + ' - ' + '$' + ${pos.maxSalary}"></div>
                     </td>
                     <td th:text="${pos.minExperience}"></td>
                     <td>

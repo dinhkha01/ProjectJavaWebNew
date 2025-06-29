@@ -192,11 +192,6 @@
                         </span>
                     </td>
                     <td class="text-end action-buttons">
-                        <a th:href="@{/admin/candidates/view/{id}(id=${candidate.id})}"
-                           class="btn btn-info interactive" title="Xem chi tiết">
-                            <i class="fas fa-eye"></i>
-                        </a>
-
                         <form th:if="${!candidate.isDeleted}"
                               th:action="@{/admin/candidates/toggle-status/{id}(id=${candidate.id})}"
                               method="post" class="d-inline">
